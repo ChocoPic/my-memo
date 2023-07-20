@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import CardItem from './memo/MemoItem'
-import { CardListWrapper } from '../../style';
+import { CardListWrapper } from '../style';
 import MemoForm from './memo/MemoForm';
+import MemoItem from './memo/MemoItem';
 
 
-const HomePage = () => {
+const MainPage = () => {
     // const [posts, setPosts] = useState([]);
 
     // useEffect(() => {
@@ -44,11 +44,11 @@ const HomePage = () => {
             {/* 메모 목록 */}
             <CardListWrapper>
                 {memos.map(memo => (
-                    <CardItem item={memo} key={memo.id}/>
+                    <MemoItem item={memo} key={memo.id}/>
                 ))}
             </CardListWrapper>
         </>
     )
 }
 
-export default HomePage
+export default MainPage

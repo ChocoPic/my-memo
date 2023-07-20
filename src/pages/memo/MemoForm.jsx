@@ -1,13 +1,15 @@
 import React, { useState } from 'react'
-import TextInput from '../../../../public/ui/TextInput';
-import Button from '../../../../public/ui/Button';
-import ColorPicker from '../../../../public/ui/ColorPicker';
+
 import { styled } from 'styled-components';
+import Button from '../../ui/Button';
+import ColorPicker from '../../ui/ColorPicker';
+import TextInput from '../../ui/TextInput';
 
 const Wrapper = styled.div`
-  background: #eeeeee;
+  background: white;
   padding: 1rem;
-
+  border-top: 1px solid gray;
+  border-bottom: 1px solid gray;
 `
 
 const Container = styled.div`
@@ -15,6 +17,9 @@ const Container = styled.div`
   flex-direction: row;
   justify-content: space-between;
 `
+const onChange = () => {
+
+}
 
 
 const MemoForm = () => {
@@ -26,12 +31,16 @@ const MemoForm = () => {
     <Wrapper>
       <Container>
         <h3>새 메모</h3>
-        <Button>X</Button>
+        <Button title="X"></Button>
       </Container>
      
       <form>
         <ColorPicker/>
-        <TextInput/>
+        <TextInput
+          value={content}
+          height={40}
+          onChange={onChange}
+        />
       </form>
       <button>저장</button>
     </Wrapper>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { Card, ColorTag, CardText} from '../../../style';
-import Button from '../../../../public/ui/Button';
+import { Card, ColorTag, CardText} from '../../style';
+import Button from '../../ui/Button';
 
 
 const MemoItem = ({ item }) => {
