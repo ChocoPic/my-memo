@@ -31,6 +31,9 @@ const MainPage = () => {
 
             {/* 새 메모 */}
             <MemoForm formHandler={formHandler}/>
+            <div>
+                {formData.color}, {formData.content}
+            </div>
             
             {/* 메모 목록 */}
             <CardListWrapper>

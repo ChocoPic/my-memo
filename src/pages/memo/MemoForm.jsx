@@ -52,7 +52,7 @@ const MemoForm = ({formHandler}) => {
   
   const submitHandler = (e) => {
     e.preventDefault(); //폼 submit 이벤트 막음
-    console.log(formData);
+    formHandler(formData);
     //TODO: 내용 저장
   };
  
