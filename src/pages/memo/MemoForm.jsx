@@ -17,32 +17,77 @@ const Container = styled.div`
   flex-direction: row;
   justify-content: space-between;
 `
-const onChange = () => {
 
-}
+const MemoForm = ({formHandler}) => {
+  const [colorPickerResult, setColorPickerResult] = useState('');
+  const [formData, setFormData] = useState({
+    color: "",
+    content: ""
+  })
+  const [showForm, setShowForm] = useState(false);
+ 
+  /* 새 메모 토글 */
+  const toggleForm = () =>{
+    setShowForm(!showForm);
+  }
+  /* 컬러피커 세팅 */
+  const colorPickerHandler = (data) => {
+    setColorPickerResult(data); //컬러 피커로 전달
+    setFormData({
+      ...formData,
+      color: data,
+    });
+  };
 
+  /* 폼 세팅 */
+  const inputChangeHandler = (e) => {
+    const {name, value} = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+    console.log(formData);
 
-const MemoForm = () => {
-  const [id, setId] = useState("");
-  const [color, setColor] = useState("#000000");
-  const [content, setContent] = useState("");
+  };
+  
+  const submitHandler = (e) => {
+    e.preventDefault(); //폼 submit 이벤트 막음
+    console.log(formData);
+    //TODO: 내용 저장
+  };
+ 
 
   return (
     <Wrapper>
       <Container>
         <h3>새 메모</h3>
-        <Button title="X"></Button>
+        <Button title={showForm? 'x': '+'} onClick={toggleForm}>
+          
+        </Button>
       </Container>
      
-      <form>
-        <ColorPicker/>
-        <TextInput
-          value={content}
-          height={40}
-          onChange={onChange}
-        />
-      </form>
-      <button>저장</button>
+      {showForm && (
+         <form onSubmit={submitHandler}>
+         <label>컬러태그 색상
+           <ColorPicker
+           name="color" 
+           value={colorPickerResult}
+           onChange={inputChangeHandler}
+           onSetPickedColor={colorPickerHandler}
+         />
+         </label>
+         <label>메모 내용
+           <input
+             name="content"
+             value={formData.content}
+             onChange={inputChangeHandler}
+           />
+         </label>
+         <button type='submit'>저장</button>
+       </form>
+      )}
+    
+     
     </Wrapper>
   )
 }

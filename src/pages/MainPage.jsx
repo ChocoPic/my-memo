@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { CardListWrapper } from '../style';
 import MemoForm from './memo/MemoForm';
 import MemoItem from './memo/MemoItem';
+import data from '../../db.json';
 
 
 const MainPage = () => {
@@ -11,28 +12,17 @@ const MainPage = () => {
     //     setPosts([...examples]);
     // }, []);
     
-    const memos = [
-        {
-            id: 1,
-            content: "내용ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ",
-            color: ""
-        },
-        {
-            id: 2,
-            content: "내용ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ",
-            color: ""
-        },
-        {
-            id: 3,
-            content: "내용ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ",
-            color: ""
-        },
-        {
-            id: 4,
-            content: "내용ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ",
-            color: ""
-        },
-    ];
+    const memos = data;
+
+    const [formData, setFormData] = useState({
+        color: "",
+        content: ""
+    });
+    const formHandler = (data) => {
+        setFormData(data);
+    };
+
+
     
     return (
         <>
@@ -40,7 +30,8 @@ const MainPage = () => {
             <h2>Memo</h2>
 
             {/* 새 메모 */}
-            <MemoForm/>
+            <MemoForm formHandler={formHandler}/>
+            
             {/* 메모 목록 */}
             <CardListWrapper>
                 {memos.map(memo => (

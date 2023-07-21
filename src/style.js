@@ -1,5 +1,15 @@
 import styled from "styled-components";
 
+/* 컬러피커 색상 */
+export const COLORS = [
+    {"id": 1, "color":"#FF0060", "state":"hidden"},
+    {"id": 2, "color":"#F6FA70", "state":"hidden"},
+    {"id": 3, "color":"#00DFA2", "state":"hidden"},
+    {"id": 4, "color":"#0079FF", "state":"hidden"},
+    {"id": 5, "color":"#9376E0", "state":"hidden"},
+    {"id": 6, "color":"#999999", "state":"hidden"}
+];
+
 /* 메모 카드 */
 // Cards
 export const CardListWrapper = styled.section`
@@ -12,6 +22,8 @@ export const CardListWrapper = styled.section`
     flex-wrap: wrap;
     align-items: flex-start;
 `;
+
+
 
 // Card Item
 export const Card = styled.div`

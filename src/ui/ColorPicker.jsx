@@ -1,15 +1,6 @@
 import React, { useState } from 'react'
 import { styled } from 'styled-components'
-
-
-const COLORS = [
-    {"id": 1, "color":"#FF0060", "state":"hidden"},
-    {"id": 2, "color":"#F6FA70", "state":"hidden"},
-    {"id": 3, "color":"#00DFA2", "state":"hidden"},
-    {"id": 4, "color":"#0079FF", "state":"hidden"},
-    {"id": 5, "color":"#9376E0", "state":"hidden"},
-    {"id": 6, "color":"#999999", "state":"hidden"}
-]
+import { COLORS } from '../style.js'
 
 const ColorContainer = styled.div`
     display: flex;
@@ -50,12 +41,11 @@ const Circle = styled.span`
 
 
 
-function ColorPicker() {
-    const [pickedValue, setPickedValue] = useState("");
+const ColorPicker = ({ onSetPickedColor })=>{
     const [colors, setColors] = useState(COLORS);
    
     const onRadioButton = (e) => {
-        setPickedValue(e.target.value);
+        // 선택된 버튼 강조(span visible)
         let copy = [...colors]
         for (let i=0; i<copy.length; i++){
             if(copy[i].color === e.target.value){
@@ -64,14 +54,11 @@ function ColorPicker() {
                 copy[i].state = 'hidden';
             }
         }
-        setColors(copy)
-        // console.log(isColors)
-        // console.log('picked: ', e.target)
-        // console.log(pickedValue)
+        setColors(copy) //선택된 값 저장
+        onSetPickedColor(e.target.value); //부모 컴포넌트로 전달
     };
 
     return (
-    <div>
         <ColorContainer>
             {colors.map(color => (
                 <StyledLabel key={color.id} bgcolor={color.color}>
@@ -89,7 +76,6 @@ function ColorPicker() {
                 )
             )}
         </ColorContainer>
-    </div>
   )
 }
 
