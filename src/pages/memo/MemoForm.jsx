@@ -3,19 +3,21 @@ import React, { useState } from 'react'
 import { styled } from 'styled-components';
 import Button from '../../ui/Button';
 import ColorPicker from '../../ui/ColorPicker';
+import {paddingLarge, radius} from '../../style';
 import TextInput from '../../ui/TextInput';
 
 const Wrapper = styled.div`
   background: white;
-  padding: 1rem;
-  border-top: 1px solid gray;
-  border-bottom: 1px solid gray;
+  padding-left: ${paddingLarge};
+  padding-right: ${paddingLarge};
+  border: 1px solid gray;
+  border-radius: ${radius};
 `
 
 const Container = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-between;  
 `
 
 const MemoForm = ({formHandler}) => {
@@ -39,21 +41,23 @@ const MemoForm = ({formHandler}) => {
     });
   };
 
-  /* 폼 세팅 */
+  /* 내용 세팅 */
   const inputChangeHandler = (e) => {
-    const {name, value} = e.target;
+    const value = e.target.value;
     setFormData({
       ...formData,
-      [name]: value,
+      content: value,
     });
-    console.log(formData);
-
   };
   
   const submitHandler = (e) => {
     e.preventDefault(); //폼 submit 이벤트 막음
     formHandler(formData);
     //TODO: 내용 저장
+    setFormData({
+      color: "",
+      content: ""
+    })
   };
  
 
@@ -77,7 +81,7 @@ const MemoForm = ({formHandler}) => {
          />
          </label>
          <label>메모 내용
-           <input
+           <TextInput
              name="content"
              value={formData.content}
              onChange={inputChangeHandler}
@@ -86,7 +90,6 @@ const MemoForm = ({formHandler}) => {
          <button type='submit'>저장</button>
        </form>
       )}
-    
      
     </Wrapper>
   )

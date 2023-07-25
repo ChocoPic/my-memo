@@ -1,8 +1,24 @@
 import React, { useState } from 'react'
-import { Card, ColorTag, CardText} from '../../style';
+import styled from "styled-components";
 import Button from '../../ui/Button';
+import ColorTag from '../../ui/ColorTag';
+import {marginMedium, radius} from '../../style';
 
+// Card Item
+const Card = styled.div`
+    margin: ${marginMedium};  
+    border-radius: ${radius};
+    background: #eeeeee;
+`;
 
+// Card 메모내용
+const CardText = styled.span`
+    margin-left: ${marginMedium};
+    margin-right: ${marginMedium};
+    color: black;
+    font-size: 1rem;
+    display: block;
+`;
 
 const MemoItem = ({ item }) => {
     // const [comments, setComments] = useState();

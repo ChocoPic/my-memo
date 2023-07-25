@@ -1,5 +1,26 @@
 import styled from "styled-components";
 
+/* 패딩 */
+export const paddingSmall = '0.25rem';
+export const paddingMedium = '1rem';
+export const paddingLarge = '2rem';
+
+/* 마진 */
+export const marginSmall = '0.25rem';
+export const marginMedium = '1rem';
+export const marginLarge = '2rem';
+
+export const marginTop = '1rem';
+export const marginBottom = '1.5rem';
+export const marginLR = '0.5rem';
+
+/* 사이즈 */
+export const minWidth = '20rem';
+export const radius = '1rem';
+
+/* 폰트 사이즈 */
+
+
 /* 컬러피커 색상 */
 export const COLORS = [
     {"id": 1, "color":"#FF0060", "state":"hidden"},
@@ -9,42 +30,3 @@ export const COLORS = [
     {"id": 5, "color":"#9376E0", "state":"hidden"},
     {"id": 6, "color":"#999999", "state":"hidden"}
 ];
-
-/* 메모 카드 */
-// Cards
-export const CardListWrapper = styled.section`
-    width: calc(100% - 2rem);
-    min-width: 10rem;
-    padding: 0.5rem;
-    background: white;   
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: flex-start;
-`;
-
-
-
-// Card Item
-export const Card = styled.div`
-    margin: 0.5rem;  
-    border-radius: 0.5rem;
-    background: #eeeeee;
-`;
-
-// 색상 태그
-export const ColorTag = styled.div`
-    margin-top: 0.5rem;
-    width: 1.25rem;
-    height: 1rem;
-    background: #3eab3e;
-    position: relative;
-`;  
-
-// Card 메모내용
-export const CardText = styled.span`
-    margin: 1rem;
-    color: black;
-    font-size: 1rem;
-    display: block;
-`;

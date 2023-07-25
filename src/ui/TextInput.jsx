@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const StyledTextarea = styled.textarea`
-    width: calc(100% - 2rem);
+    width: calc(100% - 4rem);
     ${(props) => 
         props.height && `height: ${props.height}px;`
     }
