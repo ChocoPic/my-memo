@@ -3,14 +3,13 @@ import React, { useState } from 'react'
 import { styled } from 'styled-components';
 import Button from '../../ui/Button';
 import ColorPicker from '../../ui/ColorPicker';
-import {paddingLarge, radius} from '../../style';
+import {padding, radius} from '../../style';
 import TextInput from '../../ui/TextInput';
 
 const Wrapper = styled.div`
   background: white;
-  padding-left: ${paddingLarge};
-  padding-right: ${paddingLarge};
-  border: 1px solid gray;
+  padding-left: ${padding.L};
+  padding-right: ${padding.L};
   border-radius: ${radius};
 `
 

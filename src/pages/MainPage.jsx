@@ -3,13 +3,11 @@ import styled from "styled-components";
 import MemoForm from './memo/MemoForm';
 import MemoItem from './memo/MemoItem';
 import data from '../../db.json';
-import {paddingMedium} from '../style';
-
+import { padding } from '../style';
 
 const CardListWrapper = styled.section`
     width: 100%;
-    padding: ${paddingMedium};
-    background: white;   
+    padding: ${padding.S};   
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;

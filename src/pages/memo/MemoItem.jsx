@@ -2,19 +2,20 @@ import React, { useState } from 'react'
 import styled from "styled-components";
 import Button from '../../ui/Button';
 import ColorTag from '../../ui/ColorTag';
-import {marginMedium, radius} from '../../style';
+import {margin, radius, padding} from '../../style';
 
 // Card Item
 const Card = styled.div`
-    margin: ${marginMedium};  
+    margin: ${margin.M};  
     border-radius: ${radius};
-    background: #eeeeee;
+    padding: ${padding.M};
+    background: #ffffff;
 `;
 
 // Card 메모내용
 const CardText = styled.span`
-    margin-left: ${marginMedium};
-    margin-right: ${marginMedium};
+    margin-left: ${margin.S};
+    margin-right: ${margin.S};
     color: black;
     font-size: 1rem;
     display: block;

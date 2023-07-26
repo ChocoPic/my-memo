@@ -1,24 +1,61 @@
 import styled from "styled-components";
+import { createGlobalStyle } from 'styled-components';
+
+/* 테마 색상 */
+export const theme = {
+    primaryColor: '#A1C8E8',
+    secondaryColor: '',
+}
+
+export const GlobalStyle = createGlobalStyle`
+  html{
+    height: 100%;
+    width: 100%;
+  }
+
+  body{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center; /* 가로 중앙 정렬 */
+    align-items: start;    /*세로 중앙 정렬*/
+    background: ${theme.primaryColor}
+  }
+
+  #root{
+    width: 70%;
+    height: 100;
+    min-width: 20rem;
+    max-width: 50rem;
+  }
+`
+
 
 /* 패딩 */
-export const paddingSmall = '0.25rem';
-export const paddingMedium = '1rem';
-export const paddingLarge = '2rem';
+export const padding = {
+    S: '0.25rem',
+    M: '1rem',
+    L: '2rem',
+};
 
 /* 마진 */
-export const marginSmall = '0.25rem';
-export const marginMedium = '1rem';
-export const marginLarge = '2rem';
-
-export const marginTop = '1rem';
-export const marginBottom = '1.5rem';
-export const marginLR = '0.5rem';
+export const margin = {
+    S: '0.25rem',
+    M: '1rem',
+    L: '2rem',
+    Top:'1rem',
+    Bottom:'1.5rem',
+    LR: '0.5rem'
+};
 
 /* 사이즈 */
 export const minWidth = '20rem';
 export const radius = '1rem';
 
-/* 폰트 사이즈 */
+/* 폰트 */
+export const fontSize = '';
+export const fontDefault = '';
+
 
 
 /* 컬러피커 색상 */
