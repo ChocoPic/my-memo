@@ -4,6 +4,9 @@ import MemoForm from './memo/MemoForm';
 import MemoItem from './memo/MemoItem';
 import data from '../../db.json';
 import { padding } from '../style';
+import useLocalStorage from '../store/LocalStorageHandler';
+
+// import { SaveToLocalStorage, ReadFromLocalStorage } from '../store/LocalStorageHandler';
 
 const CardListWrapper = styled.section`
     width: 100%;
@@ -16,13 +19,12 @@ const CardListWrapper = styled.section`
 
 
 const MainPage = () => {
-    // const [posts, setPosts] = useState([]);
-
-    // useEffect(() => {
-    //     setPosts([...examples]);
-    // }, []);
-    
-    const memos = data;
+    const [memos, setMemos] = useState([]);
+    const storage = useLocalStorage("memo");
+    useEffect(() => {
+        console.log(storage.readData);
+        setMemos(storage.readData);
+    }, [])
 
     const [formData, setFormData] = useState({
         color: "",
@@ -31,7 +33,6 @@ const MainPage = () => {
     const formHandler = (data) => {
         setFormData(data);
     };
-
 
     
     return (
