@@ -8,8 +8,9 @@ export const theme = {
 
 export const GlobalStyle = createGlobalStyle`
   html{
-    height: 100%;
-    width: 100%;
+    display: flex;
+    min-height: 100%;
+    min-width: 100%;
   }
 
   body{

@@ -21,10 +21,6 @@ const MainPage = () => {
 
     const [memos, setMemos] = useState([]);
     const [loaded, setLoaded] = useState(false);
-    const [formData, setFormData] = useState({
-        color: "",
-        content: ""
-    });
 
     // storedData가 업데이트될 때마다 memos도 업데이트 해주자
     useEffect(()=>{
@@ -38,8 +34,7 @@ const MainPage = () => {
     },[storedData]);
    
     const formHandler = (data) => {
-        setFormData(data);  // 폼 입력을 받아와서
-        addData(formData); //스토리지에 내용 저장
+        addData(data); //스토리지에 내용 저장
     };
 
     // 데이터가 준비될때까지 로딩중

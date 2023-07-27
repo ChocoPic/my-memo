@@ -19,7 +19,7 @@ const useLocalStorage = (key) => {
     }else{
       setStoredData(test);
     }
-    console.log('localStorageHandler 마운트');
+    // console.log('localStorageHandler 마운트');
   }, []);
 
   // ADD_DATA

@@ -47,12 +47,24 @@ const MemoForm = ({formHandler}) => {
     });
   };
   
-  const submitHandler = (e) => {
-    e.preventDefault(); //폼 submit 이벤트 막음
-    formHandler(formData);  //상위컴포넌트(MainPage)로 전달
-    setFormData(initialState);  //폼 초기화
-  };
+  // const submitHandler = (e) => {
+  //   e.preventDefault(); //폼 submit 이벤트 막음
+  //   if(formData.color == "" || formData.content == ""){
+  //     console.log('메모 제대로 입력 안됨!');
+  //   }else{
+  //     formHandler(formData);  //상위컴포넌트(MainPage)로 전달
+  //     setFormData(initialState);  //폼 초기화
+  //   }
+  // };
 
+  const sendData = (e) => {
+    if(formData.color == "" || formData.content == ""){
+      console.log('메모 제대로 입력 안됨!');
+    }else{
+      formHandler(formData);  //상위컴포넌트(MainPage)로 전달
+      setFormData(initialState);  //폼 초기화
+    }
+  }
 
   return (
     <Wrapper>
@@ -64,7 +76,7 @@ const MemoForm = ({formHandler}) => {
       </Container>
      
       {showForm && (
-         <form onSubmit={submitHandler}>
+         <form >
          <label>컬러태그 색상
            <ColorPicker
            name="color" 
@@ -80,7 +92,7 @@ const MemoForm = ({formHandler}) => {
              onChange={inputChangeHandler}
            />
          </label>
-         <button type='submit'>저장</button>
+         <button type='button' onClick={sendData}>저장</button>
        </form>
       )}
      
