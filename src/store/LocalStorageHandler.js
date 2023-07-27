@@ -1,35 +1,44 @@
-//로컬 스토리지 관련 커스텀 훅
 import { useEffect, useState } from "react";
+import test from '../../db.json';
 
+//로컬 스토리지 관련 커스텀 훅
+const useLocalStorage = (key) => {
+  const testData = test;
+  const [storedData, setStoredData] = useState([]);
 
-function useLocalStorage(key){
-  const storage = window.localStorage;
-  
-  const readData = () => {
-    try{
-      const data = storage.getItem(key);  //저장된 데이터
-      return JSON.parse(data);  //배열로 바꿔서 리턴
-    }catch(error){
-      return null;
+  // setStoredData(test);
+  // localStorage.setItem(key, JSON.stringify(test));
+
+  useEffect(() => {
+    //컴포넌트 마운트될 때 실행되는 부분
+    var data = localStorage.getItem(key);
+    if(data){
+      localStorage.setItem(key, (data));  //문자열로 바꿔서 저장
+      setStoredData(JSON.parse(data));  //JSON으로 복원해서 출력
+    }else{
+      setStoredData(test);
     }
+  }, []);
+
+  // ADD_DATA
+  const addData = (inputData) =>{
+    const id = Date.now().toString(36); //시간으로 id 생성
+    const newData = {id, ...inputData}; //id를 데이터에 추가
+    const updatedData = storedData? [...storedData, newData] : [newData];
+    localStorage.setItem(key, JSON.stringify(updatedData));
+    setStoredData(updatedData);
+  };
+
+  // EDIT_DATA
+  function editData(data){
+
   }
+  //DELETE_DATA
+  function deleteData(data){
 
-  const [storedData, setStoredData] = useState(readData); //배열
-  const setData = (data) => { //새 데이터 배열로 받아옴
-    try{
-      storage.setItem(key, JSON.stringify(data)); //문자열로 바꿔서 저장
-      setStoredData(data);  //state 세팅
-    }catch(error){
-      console.error('저장하지 못했습니다',error);
-    }
   }
-
-  useEffect(()=>{ //데이터 업데이트를 위해 계속 읽어옴
-    setStoredData(readData())
-  }, [])
-
   
-  return {readData, setData, storedData};
+  return {storedData, addData};
 }
 export default useLocalStorage;
 

@@ -6,8 +6,6 @@ import data from '../../db.json';
 import { padding } from '../style';
 import useLocalStorage from '../store/LocalStorageHandler';
 
-// import { SaveToLocalStorage, ReadFromLocalStorage } from '../store/LocalStorageHandler';
-
 const CardListWrapper = styled.section`
     width: 100%;
     padding: ${padding.S};   
@@ -19,12 +17,20 @@ const CardListWrapper = styled.section`
 
 
 const MainPage = () => {
+    const { storedData } = useLocalStorage("memo");
+
     const [memos, setMemos] = useState([]);
-    const storage = useLocalStorage("memo");
+    const [loaded, setLoaded] = useState(false);
+
     useEffect(() => {
-        console.log(storage.readData);
-        setMemos(storage.readData);
-    }, [])
+        if(storedData){
+            setLoaded(true);
+            setMemos(storedData);
+        }else{
+            setLoaded(false);
+            setMemos();
+        }
+    },[memos]); //memos 바뀔때마다 렌더링
 
     const [formData, setFormData] = useState({
         color: "",
@@ -34,7 +40,11 @@ const MainPage = () => {
         setFormData(data);
     };
 
-    
+    // 데이터가 준비될때까지 로딩중
+    if (!loaded){
+        return `<div>로딩중...${memos}</div>`;
+    }
+    // 데이터가 있으면 렌더링
     return (
         <>
             {/* 로고 */}
@@ -49,9 +59,9 @@ const MainPage = () => {
             
             {/* 메모 목록 */}
             <CardListWrapper>
-                {memos.map(memo => (
-                    <MemoItem item={memo} key={memo.id}/>
-                ))}
+            {loaded && (memos.map(memo => (
+                <MemoItem item={memo} key={memo.id}/>
+            )))}
             </CardListWrapper>
         </>
     )
