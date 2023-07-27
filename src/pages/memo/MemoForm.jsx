@@ -5,7 +5,6 @@ import Button from '../../ui/Button';
 import ColorPicker from '../../ui/ColorPicker';
 import {padding, radius} from '../../style';
 import TextInput from '../../ui/TextInput';
-import useLocalStorage from '../../store/LocalStorageHandler';
 
 const Wrapper = styled.div`
   background: white;
@@ -25,8 +24,6 @@ const MemoForm = ({formHandler}) => {
   const [colorPickerResult, setColorPickerResult] = useState('');
   const [formData, setFormData] = useState(initialState);
   const [showForm, setShowForm] = useState(false);
-
-  const { addData } = useLocalStorage("memo"); 
  
   /* 새 메모 토글 */
   const toggleForm = () =>{
@@ -53,7 +50,6 @@ const MemoForm = ({formHandler}) => {
   const submitHandler = (e) => {
     e.preventDefault(); //폼 submit 이벤트 막음
     formHandler(formData);  //상위컴포넌트(MainPage)로 전달
-    addData(formData); //스토리지에 내용 저장
     setFormData(initialState);  //폼 초기화
   };
 

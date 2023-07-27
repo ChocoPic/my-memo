@@ -6,10 +6,8 @@ import { BrowserRouter } from 'react-router-dom'  //라우터
 import { GlobalStyle } from './style.js'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
     <BrowserRouter>
       <GlobalStyle/>
       <App />
     </BrowserRouter>
-  </React.StrictMode>,
 )

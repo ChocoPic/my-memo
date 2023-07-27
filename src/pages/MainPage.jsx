@@ -17,27 +17,29 @@ const CardListWrapper = styled.section`
 
 
 const MainPage = () => {
-    const { storedData } = useLocalStorage("memo");
+    const { storedData, addData } = useLocalStorage("memo");
 
     const [memos, setMemos] = useState([]);
     const [loaded, setLoaded] = useState(false);
-
-    useEffect(() => {
-        if(storedData){
-            setLoaded(true);
-            setMemos(storedData);
-        }else{
-            setLoaded(false);
-            setMemos();
-        }
-    },[memos]); //memos 바뀔때마다 렌더링
-
     const [formData, setFormData] = useState({
         color: "",
         content: ""
     });
+
+    // storedData가 업데이트될 때마다 memos도 업데이트 해주자
+    useEffect(()=>{
+        if(storedData){ //로딩 됐으면 세팅
+            setMemos(storedData);
+            setLoaded(true);
+        }else{
+            setLoaded(false);
+        }
+        console.log('MainPage',storedData)
+    },[storedData]);
+   
     const formHandler = (data) => {
-        setFormData(data);
+        setFormData(data);  // 폼 입력을 받아와서
+        addData(formData); //스토리지에 내용 저장
     };
 
     // 데이터가 준비될때까지 로딩중
@@ -52,11 +54,11 @@ const MainPage = () => {
 
             {/* 새 메모 */}
             <MemoForm formHandler={formHandler}/>
-            <div>
+            {/* <div>
                 색:{formData.color} 내용:{formData.content}
                 <br/>이걸 저장하고 업데이트 할 예정
             </div>
-            
+             */}
             {/* 메모 목록 */}
             <CardListWrapper>
             {loaded && (memos.map(memo => (

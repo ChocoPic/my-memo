@@ -9,15 +9,17 @@ const useLocalStorage = (key) => {
   // setStoredData(test);
   // localStorage.setItem(key, JSON.stringify(test));
 
+
+  // 마운트된 직후에 한번만 실행된다. 렌더링 될 때 한번.
   useEffect(() => {
-    //컴포넌트 마운트될 때 실행되는 부분
-    var data = localStorage.getItem(key);
+    var data = localStorage.getItem(key); //데이터를 불러온다
     if(data){
       localStorage.setItem(key, (data));  //문자열로 바꿔서 저장
       setStoredData(JSON.parse(data));  //JSON으로 복원해서 출력
     }else{
       setStoredData(test);
     }
+    console.log('localStorageHandler 마운트');
   }, []);
 
   // ADD_DATA
