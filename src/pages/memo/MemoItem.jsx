@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
 import styled from "styled-components";
 import ColorTag from '../../ui/ColorTag';
 import IconButton from '../../ui/IconButton';
 import {margin, radius, padding} from '../../style';
 import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
+import Popup from "./Popup";
+import { useState } from "react";
 
 // Card Item
 const Card = styled.div`
@@ -28,32 +29,32 @@ const ButtonContainer = styled.div`
     justify-content: flex-end;
 `
 
-const MemoItem = ({ item }) => {
-    // const [comments, setComments] = useState();
-    // const handleComment = event => {
-    //     props.onChange(event.target.value);
-    // }
+const MemoItem = ({ item, onEdit, onDelete }) => {
+    const [isOpen, setIsOpen] = useState(false);
+    const openPopup = () => {
+        setIsOpen(true);
+    };
+    const closePopup = () => {
+        setIsOpen(false);
+    };
 
-    const editMemo = () => {
-
+    const editMemo = (e) => {
+        openPopup();
+        onEdit(item);
     }
-    const deleteMemo = () => {
-
+    const deleteMemo = (e) => {
+        onDelete(item);
     }
 
   return (
     <Card>
+        <Popup isOpen={isOpen} closePopup={closePopup}/>
         <ColorTag color={item.color}/>
         <CardText>{item.content}</CardText>
         <ButtonContainer>
-            <IconButton onClick={editMemo} icon={<AiOutlineEdit size={28}/>}/>
-            <IconButton onClick={deleteMemo} icon={<AiOutlineDelete size={28}/>}/>
+            <IconButton onClick={editMemo} icon={<AiOutlineEdit size={24}/>}/>
+            <IconButton onClick={deleteMemo} icon={<AiOutlineDelete size={24}/>}/>
         </ButtonContainer>
-    
-        {/* 부모 컴포넌트로 state를 올려보자
-        <div className='comment'>
-            <input type="text" name="comment" onChange={handleComment}/>
-        </div> */}
     </Card>
   )
 }
