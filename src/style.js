@@ -28,6 +28,26 @@ export const GlobalStyle = createGlobalStyle`
     min-width: 20rem;
     max-width: 50rem;
   }
+
+  // 화면 좁을 때
+  @media screen and (min-width: 20rem){
+    #root{
+      width: 90%;
+    }
+  }
+  // 화면 넓을 때
+  @media screen and (min-width: 40rem){
+    #root{
+      width: 70%;
+    }
+  }
+ // 화면 더더 넓을 때
+  @media screen and (min-width: 60rem){
+    #root{
+      width: 40rem;
+    }
+  }
+ 
 `
 
 

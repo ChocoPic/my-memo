@@ -1,8 +1,10 @@
-import React, { useState } from 'react'
 import styled from "styled-components";
-import Button from '../../ui/Button';
 import ColorTag from '../../ui/ColorTag';
+import IconButton from '../../ui/IconButton';
 import {margin, radius, padding} from '../../style';
+import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
+import Popup from "./Popup";
+import { useState } from "react";
 
 // Card Item
 const Card = styled.div`
@@ -21,23 +23,38 @@ const CardText = styled.span`
     display: block;
 `;
 
-const MemoItem = ({ item }) => {
-    // const [comments, setComments] = useState();
-    // const handleComment = event => {
-    //     props.onChange(event.target.value);
-    // }
+// 버튼 영역
+const ButtonContainer = styled.div`
+    display: flex;
+    justify-content: flex-end;
+`
+
+const MemoItem = ({ item, onEdit, onDelete }) => {
+    const [isOpen, setIsOpen] = useState(false);
+    const openPopup = () => {
+        setIsOpen(true);
+    };
+    const closePopup = () => {
+        setIsOpen(false);
+    };
+
+    const editMemo = (e) => {
+        openPopup();
+        onEdit(item);
+    }
+    const deleteMemo = (e) => {
+        onDelete(item);
+    }
 
   return (
     <Card>
+        <Popup isOpen={isOpen} closePopup={closePopup}/>
         <ColorTag color={item.color}/>
         <CardText>{item.content}</CardText>
-        <Button title="수정아이콘"></Button>
-        <Button title="삭제아이콘"></Button>
-        
-        {/* 부모 컴포넌트로 state를 올려보자
-        <div className='comment'>
-            <input type="text" name="comment" onChange={handleComment}/>
-        </div> */}
+        <ButtonContainer>
+            <IconButton onClick={editMemo} icon={<AiOutlineEdit size={24}/>}/>
+            <IconButton onClick={deleteMemo} icon={<AiOutlineDelete size={24}/>}/>
+        </ButtonContainer>
     </Card>
   )
 }

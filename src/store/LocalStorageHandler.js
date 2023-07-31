@@ -23,7 +23,7 @@ const useLocalStorage = (key) => {
   }, []);
 
   // ADD_DATA
-  const addData = (inputData) =>{
+  const addData = (inputData) => {
     const id = Date.now().toString(36); //시간으로 id 생성
     const newData = {id, ...inputData}; //id를 데이터에 추가
     const updatedData = storedData? [...storedData, newData] : [newData];
@@ -32,15 +32,28 @@ const useLocalStorage = (key) => {
   };
 
   // EDIT_DATA
-  function editData(data){
+  const editData = (changedData) => { //inputData: id, 수정색, 수정내용
+    let targetIndex = 0; // 수정할 데이터의 인덱스를 찾는다
+    for(let i=0; i<storedData.length; i++){ 
+      if(changedData.id == storedData[i].id){
+        targetIndex = i;
+        break;
+      }
+    }
+    let updatedData = [...storedData];
+    updatedData[targetIndex] = changedData; //내용 변경
+    localStorage.setItem(key, JSON.stringify(updatedData));
+    setStoredData(updatedData);
+  };
 
-  }
   //DELETE_DATA
-  function deleteData(data){
-
-  }
+  const deleteData = (targetDataId) => {
+    let updatedData = storedData.filter((data => data.id !== targetDataId)); //해당 인덱스를 제외하고 새 배열 생성
+    localStorage.setItem(key, JSON.stringify(updatedData));
+    setStoredData(updatedData);
+  };
   
-  return {storedData, addData};
+  return {storedData, addData, editData, deleteData};
 }
 export default useLocalStorage;
 
