@@ -31,12 +31,14 @@ const ButtonContainer = styled.div`
 
 const MemoItem = ({ item, onEdit, onDelete }) => {
     const [isOpen, setIsOpen] = useState(false);
+
     const openPopup = () => {
         setIsOpen(true);
     };
     const closePopup = () => {
         setIsOpen(false);
     };
+
 
     const editMemo = (e) => {
         openPopup();
@@ -47,8 +49,11 @@ const MemoItem = ({ item, onEdit, onDelete }) => {
     }
 
   return (
-    <Card>
-        <Popup isOpen={isOpen} closePopup={closePopup}/>
+    <Card >
+        {/* edit버튼 클릭시 보여줄 팝업창 */}
+        <Popup isOpen={isOpen} closePopup={closePopup} prevData={item}/>
+
+        {/* 기본 구성요소들 */}
         <ColorTag color={item.color}/>
         <CardText>{item.content}</CardText>
         <ButtonContainer>

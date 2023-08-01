@@ -38,7 +38,6 @@ const ContainerHeader = styled.div`
 
 const MainPage = () => {
     const { storedData, addData, editData, deleteData } = useLocalStorage("memo");
-
     const [memos, setMemos] = useState([]); //메모 아이템 내용들
     const [loaded, setLoaded] = useState(false);    //로딩 여부
     const [showForm, setShowForm] = useState(false);    //새 메모 창

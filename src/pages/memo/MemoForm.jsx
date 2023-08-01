@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
 import { styled } from 'styled-components';
-import {padding, radius} from '../../style';
+import {padding} from '../../style';
 
 import Button from '../../ui/Button';
 import ColorPicker from '../../ui/ColorPicker';
@@ -26,13 +26,13 @@ const LabelText = styled.span`
   font-weight: bold;
 
 `
-const MemoForm = ({formHandler}) => {
+const MemoForm = ({formHandler, initialData}) => {
   const initialState = { color: "", content: "" };
-  const [colorPickerResult, setColorPickerResult] = useState('');
-  const [formData, setFormData] = useState(initialState);
+  const [formData, setFormData] = useState(initialData || initialState);
+  const [colorPickerResult, setColorPickerResult] = useState(formData.color);
   const [error1, setError1] = useState("");
   const [error2, setError2] = useState("");
- 
+
   /* 컬러피커 세팅 */
   const colorPickerHandler = (data) => {
     setError1("");
