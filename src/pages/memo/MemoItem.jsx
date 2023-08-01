@@ -40,10 +40,9 @@ const MemoItem = ({ item }) => {
     const closePopup = () => {
         setIsOpen(false);
     };
-
     const editMemo = (e) => {
-        openPopup();
-    }
+        openPopup(); // 수정 팝업창 띄우기
+    };
     const deleteMemo = (e) => {
         deleteData(item.id);
         window.location.reload();
