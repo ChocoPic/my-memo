@@ -47,9 +47,6 @@ const MemoForm = ({ initialData }) => {
     }
   }, []);
   
-
-  console.log(initialData, formData);
-
   /* 컬러피커 세팅 */
   const colorPickerHandler = (data) => {
     setError1("");
@@ -76,6 +73,7 @@ const MemoForm = ({ initialData }) => {
 
   /* 저장 버튼 눌렀을 때 실행할 함수*/
   const sendData = (e) => {
+    // 유효성 검사
     if(formData.color == ""){
       setError1("태그 색상을 선택하세요");
       if(formData.content == ""){
