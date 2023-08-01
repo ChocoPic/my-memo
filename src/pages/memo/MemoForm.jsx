@@ -1,11 +1,12 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { styled } from 'styled-components';
-import {padding} from '../../style';
+import { padding } from '../../style';
 
 import Button from '../../ui/Button';
 import ColorPicker from '../../ui/ColorPicker';
 import TextInput from '../../ui/TextInput';
+import useLocalStorage from '../../store/LocalStorageHandler';
 
 const Wrapper = styled.div`
   padding-left: ${padding.L};
@@ -26,12 +27,28 @@ const LabelText = styled.span`
   font-weight: bold;
 
 `
-const MemoForm = ({formHandler, initialData}) => {
+const MemoForm = ({ initialData }) => {
   const initialState = { color: "", content: "" };
-  const [formData, setFormData] = useState(initialData || initialState);
+  const { addData, editData } = useLocalStorage("memo");
+
+  const [mode, setMode] = useState("");
+  const [formData, setFormData] = useState(initialState);
   const [colorPickerResult, setColorPickerResult] = useState(formData.color);
   const [error1, setError1] = useState("");
   const [error2, setError2] = useState("");
+
+  //최초 한번만 초기화한다. 데이터 미리 세팅
+  useEffect(() => {
+    if(initialData){
+      setMode("EDIT");
+      setFormData(initialData);
+    }else{
+      setMode("ADD");
+    }
+  }, []);
+  
+
+  console.log(initialData, formData);
 
   /* 컬러피커 세팅 */
   const colorPickerHandler = (data) => {
@@ -57,6 +74,7 @@ const MemoForm = ({formHandler, initialData}) => {
     }
   };
 
+  /* 저장 버튼 눌렀을 때 실행할 함수*/
   const sendData = (e) => {
     if(formData.color == ""){
       setError1("태그 색상을 선택하세요");
@@ -64,7 +82,16 @@ const MemoForm = ({formHandler, initialData}) => {
         setError2("내용을 입력하세요");      
       }
     }else{
-      formHandler(formData);  //상위컴포넌트(MainPage)로 전달
+      switch(mode){
+        case "ADD":
+          addData(formData);
+          break;
+        case "EDIT":
+          editData(formData);
+          break;
+        default:
+          addData(formData);
+      }
       setFormData(initialState);  //폼 초기화
     }
   }
@@ -72,26 +99,28 @@ const MemoForm = ({formHandler, initialData}) => {
   return (
     <Wrapper>
       <form >
-      <label>
-        <LabelText>COLOR</LabelText>
-        <ColorPicker
-          name="color" 
-          value={colorPickerResult}
-          onChange={inputChangeHandler}
-          onSetPickedColor={colorPickerHandler}
-        />
-      <ErrorMessage>{error1}</ErrorMessage>
-      </label>
-      <label>
-        <LabelText>MEMO</LabelText>
-        <TextInput
-          name="content"
-          value={formData.content}
-          onChange={inputChangeHandler}
-        />
-      </label>
-        <ErrorMessage>{error2}</ErrorMessage>
-        <Button title='저장' onClick={sendData}></Button>
+        <label>
+          <LabelText>COLOR</LabelText>
+          <ColorPicker
+            name="color" 
+            value={colorPickerResult}
+            onChange={inputChangeHandler}
+            onSetPickedColor={colorPickerHandler}
+          />
+        </label>
+        <ErrorMessage>{error1}</ErrorMessage>
+
+        <label>
+          <LabelText>MEMO</LabelText>
+          <TextInput
+            name="content"
+            value={formData.content}
+            onChange={inputChangeHandler}
+          />
+        </label>
+          <ErrorMessage>{error2}</ErrorMessage>
+
+          <Button title='저장' onClick={sendData}></Button>
       </form>
     </Wrapper>
   )

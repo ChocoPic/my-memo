@@ -37,7 +37,7 @@ const ContainerHeader = styled.div`
 `
 
 const MainPage = () => {
-    const { storedData, addData, editData, deleteData } = useLocalStorage("memo");
+    const { storedData } = useLocalStorage("memo");
     const [memos, setMemos] = useState([]); //메모 아이템 내용들
     const [loaded, setLoaded] = useState(false);    //로딩 여부
     const [showForm, setShowForm] = useState(false);    //새 메모 창
@@ -54,26 +54,15 @@ const MainPage = () => {
         console.log('MainPage',storedData)
     },[storedData]);
 
+    // 외부 클릭시 새 메모 닫기
+    const closeForm = (e) => {
+       setShowForm(false);
+    }
     // 새 메모 토글 버튼
     const toggleForm = () =>{
         setShowForm(!showForm);
     }
-    // ADD MEMO //
-    const formHandler = (data) => {
-        addData(data); //스토리지에 새 데이터 저장
-    };
-    // EDIT MEMO //
-    const editHandler = (data) => {
-        //data: 누른 메모의 id, color, content
-        //메모 작성 폼 팝업 띄워줌
-        //팝업으로 뜬 폼에 기존 data 세팅
-        editData(data); //저장 누르면 내용 수정
-    }
-    // DELETE MEMO //
-    const deleteHandler = (data) => {
-        deleteData(data.id);    //스토리지에서 해당 데이터 삭제
-    }
- 
+    
     // 데이터가 준비될때까지 로딩중
     if (!loaded){
         return `<div>로딩중...${memos}</div>`;
@@ -94,20 +83,20 @@ const MainPage = () => {
                     />
                 </ContainerHeader>
                 {showForm && (
-                    <MemoForm formHandler={formHandler}/>
+                    <MemoForm />
                 )}
             </Container>
 
             -----------------  구분선?  -------------------
           
             {/* 메모 목록 */}
-            <CardListWrapper>
-            {loaded && (memos.map(memo => (
-                <MemoItem key={memo.id} 
-                    item={memo} 
-                    onEdit={editHandler}
-                    onDelete={deleteHandler}
-                />
+            <CardListWrapper onClick={closeForm}>
+            {loaded && (
+                memos.map(memo => (
+                    <MemoItem 
+                        key={memo.id} 
+                        item={memo} 
+                    />
             )))}
             </CardListWrapper>
         </>

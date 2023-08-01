@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import MemoForm from './MemoForm'
 import styled from 'styled-components';
 import { padding, radius } from '../../style';
@@ -37,7 +37,7 @@ const Popup = ({isOpen, closePopup, prevData}) => {
   const preventOutsideClick = (e) => {
     console.log('외부')
     e.stopPropagation();
-}
+  }
 
   return (
     <>
@@ -45,7 +45,7 @@ const Popup = ({isOpen, closePopup, prevData}) => {
         <Overlay onClick={preventOutsideClick}>
           <StyledPopup>
               <IconButton icon={<AiOutlineClose/>} onClick={closePopup}/>
-              <MemoForm initialData={prevData}/>
+              <MemoForm initialData={prevData} />
           </StyledPopup>    
         </Overlay>
       )}

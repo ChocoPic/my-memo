@@ -40,7 +40,7 @@ const useLocalStorage = (key) => {
         break;
       }
     }
-    let updatedData = [...storedData];
+    let updatedData = [...storedData];  //저장된 데이터의 사본
     updatedData[targetIndex] = changedData; //내용 변경
     localStorage.setItem(key, JSON.stringify(updatedData));
     setStoredData(updatedData);
