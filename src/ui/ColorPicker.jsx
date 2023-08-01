@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { styled } from 'styled-components'
 import { COLORS } from '../style.js'
 
@@ -39,33 +39,32 @@ const Circle = styled.span`
     visibility: ${(props) => props.visible};
 `
 
+const ColorPicker = ({ onChange, curColor })=>{
+    const [colors, setColors] = useState(COLORS);   //색상 목록 배열
 
-
-const ColorPicker = ({ onSetPickedColor, value})=>{
-    let init = [...COLORS];
-    if(value){
-        for(let i=0; i<init.length; i++){
-            if(value == init[i].color){
-                init[i].state = 'visible';
-            }else{
-                init[i].state = 'hidden';
-            }
-        }
-    }
-    const [colors, setColors] = useState(init);   //색상 목록 배열
-   
-    const onRadioButton = (e) => {
+    const checkingColor = (pickedColor) => {
         // 선택된 버튼 강조(span visible)
-        let copy = [...colors]
-        for (let i=0; i<copy.length; i++){
-            if(copy[i].color === e.target.value){
+        let copy = [...colors];
+        for(let i=0; i<copy.length; i++){
+            if(pickedColor === copy[i].color){
                 copy[i].state = 'visible';
             }else{
                 copy[i].state = 'hidden';
             }
         }
-        setColors(copy) //선택된 값 저장
-        onSetPickedColor(e.target.value); //부모 컴포넌트로 전달
+        return copy;
+    }
+
+    useEffect(() => {
+        if(curColor){
+            setColors(checkingColor(curColor));    //선택된 색 있으면 표시
+            onChange(curColor); //부모 컴포넌트로 전달
+        }
+    },[])
+   
+    const onRadioButton = (e) => {
+        setColors(checkingColor(e.target.value)) //선택된 값 저장
+        onChange(e.target.value); //부모 컴포넌트로 전달
     };
 
     return (

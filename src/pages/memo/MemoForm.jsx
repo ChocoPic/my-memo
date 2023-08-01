@@ -27,98 +27,100 @@ const LabelText = styled.span`
   font-weight: bold;
 
 `
-const MemoForm = ({ initialData }) => {
-  const initialState = { color: "", content: "" };
+const MemoForm = ({ handleShow, initialData }) => {
   const { addData, editData } = useLocalStorage("memo");
 
-  const [mode, setMode] = useState("");
-  const [formData, setFormData] = useState(initialState);
-  const [colorPickerResult, setColorPickerResult] = useState(formData.color);
-  const [error1, setError1] = useState("");
-  const [error2, setError2] = useState("");
+  const [mode, setMode] = useState("ADD");
+  const [color, setColor] = useState("");
+  const [content, setContent] = useState("");
+  const [validColor, setValidColor] = useState(false);
+  const [validContent, setValidContent] = useState(false);
 
   //최초 한번만 초기화한다. 데이터 미리 세팅
   useEffect(() => {
     if(initialData){
       setMode("EDIT");
-      setFormData(initialData);
+      setColor(initialData.color);
+      setValidColor(true);
+      setContent(initialData.content);
+      setValidContent(true);
     }else{
-      setMode("ADD");
+      setMode("ADD");;
     }
   }, []);
-  
-  /* 컬러피커 세팅 */
-  const colorPickerHandler = (data) => {
-    setError1("");
-    setColorPickerResult(data); //컬러 피커로 전달
-    setFormData({
-      ...formData,
-      color: data,
-    });
-  };
 
-  /* 내용 세팅 */
-  const inputChangeHandler = (e) => {
-    const value = e.target.value;
-    setFormData({
-      ...formData,
-      content: value,
-    });
-    if(value.replace(" ","") == ""){
-      setError2("내용을 입력하세요");
+  // 컬러피커 세팅
+  const onSetColor = (dataFromColorpicker) => {
+    setColor(dataFromColorpicker);
+    if(color === ""){
+      setValidColor(false)
     }else{
-      setError2("");
+      setValidColor(true);
     }
   };
 
-  /* 저장 버튼 눌렀을 때 실행할 함수*/
-  const sendData = (e) => {
-    // 유효성 검사
-    if(formData.color == ""){
-      setError1("태그 색상을 선택하세요");
-      if(formData.content == ""){
-        setError2("내용을 입력하세요");      
-      }
+  // 내용 세팅
+  const onSetContent = (e) => {
+    const val = e.target.value;
+    setContent(val);
+    if(val.replace(" ","").length == 0){
+      setValidContent(false)
     }else{
+      setValidContent(true);
+    }
+  };
+
+  // 저장 버튼 눌렀을 때 실행할 함수
+  const sendData = (e) => {
+    // 다른 이벤트 막기
+    e.preventDefault();
+
+    //유효하면 저장
+    if(validColor && validContent){
       switch(mode){
         case "ADD":
-          addData(formData);
+          addData({ color: color, content: content })
           break;
         case "EDIT":
-          editData(formData);
+          editData({ id: initialData.id, color: color, content: content })
           break;
         default:
-          addData(formData);
+          addData({ color: color, content: content })
       }
-      setFormData(initialState);  //폼 초기화
+      setColor("");  //초기화
+      setContent("");  //초기화
+      window.location.reload();  //화면갱신
+      handleShow(); //폼 닫기
+    }else{
+      console.log('저장실패', mode)
     }
   }
 
   return (
     <Wrapper>
-      <form >
+      <form>
         <label>
           <LabelText>COLOR</LabelText>
           <ColorPicker
             name="color" 
-            value={colorPickerResult}
-            onChange={inputChangeHandler}
-            onSetPickedColor={colorPickerHandler}
+            value={color}
+            curColor={initialData? initialData.color:""}
+            onChange={onSetColor}
           />
         </label>
-        <ErrorMessage>{error1}</ErrorMessage>
+        {!validColor && <ErrorMessage>색상을 선택하세요</ErrorMessage>}
 
         <label>
           <LabelText>MEMO</LabelText>
           <TextInput
             name="content"
-            value={formData.content}
-            onChange={inputChangeHandler}
+            value={content}
+            onChange={onSetContent}
           />
         </label>
-          <ErrorMessage>{error2}</ErrorMessage>
+        {!validContent && <ErrorMessage>내용을 입력하세요</ErrorMessage>}
 
-          <Button title='저장' onClick={sendData}></Button>
+        <Button title='저장' onClick={sendData}></Button>
       </form>
     </Wrapper>
   )

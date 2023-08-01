@@ -44,12 +44,9 @@ const MemoItem = ({ item }) => {
         openPopup(); // 수정 팝업창 띄우기
     };
     const deleteMemo = (e) => {
-        const doDelete = window.confirm('정말로 삭제하시겠습니까?'); // 삭제 확인 메시지 띄우기
-        if(doDelete){
-            deleteData(item.id);
-            window.location.reload();
-        }
-    };
+        deleteData(item.id);
+        window.location.reload();
+    }
 
   return (
     <Card >
