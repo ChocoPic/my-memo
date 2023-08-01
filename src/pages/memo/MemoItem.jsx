@@ -5,6 +5,7 @@ import {margin, radius, padding} from '../../style';
 import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
 import Popup from "./Popup";
 import { useState } from "react";
+import useLocalStorage from "../../store/LocalStorageHandler";
 
 // Card Item
 const Card = styled.div`
@@ -29,8 +30,10 @@ const ButtonContainer = styled.div`
     justify-content: flex-end;
 `
 
-const MemoItem = ({ item, onEdit, onDelete }) => {
+const MemoItem = ({ item }) => {
+    const {deleteData} = useLocalStorage("memo");
     const [isOpen, setIsOpen] = useState(false);
+
     const openPopup = () => {
         setIsOpen(true);
     };
@@ -40,15 +43,20 @@ const MemoItem = ({ item, onEdit, onDelete }) => {
 
     const editMemo = (e) => {
         openPopup();
-        onEdit(item);
     }
     const deleteMemo = (e) => {
-        onDelete(item);
+        deleteData(item.id);
     }
 
   return (
-    <Card>
-        <Popup isOpen={isOpen} closePopup={closePopup}/>
+    <Card >
+        {/* edit버튼 클릭시 보여줄 팝업창 */}
+        <Popup 
+            isOpen={isOpen} 
+            closePopup={closePopup} prevData={item} 
+        />
+
+        {/* 기본 구성요소들 */}
         <ColorTag color={item.color}/>
         <CardText>{item.content}</CardText>
         <ButtonContainer>

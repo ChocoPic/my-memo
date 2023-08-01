@@ -34,15 +34,25 @@ const Circle = styled.span`
     position: absolute;
     width: 1.5rem;
     height: 1.5rem;
-    border: 0.01rem solid black;
+    border: 0.15rem solid black;
     border-radius: 50%;
     visibility: ${(props) => props.visible};
 `
 
 
 
-const ColorPicker = ({ onSetPickedColor })=>{
-    const [colors, setColors] = useState(COLORS);
+const ColorPicker = ({ onSetPickedColor, value})=>{
+    let init = [...COLORS];
+    if(value){
+        for(let i=0; i<init.length; i++){
+            if(value == init[i].color){
+                init[i].state = 'visible';
+            }else{
+                init[i].state = 'hidden';
+            }
+        }
+    }
+    const [colors, setColors] = useState(init);   //색상 목록 배열
    
     const onRadioButton = (e) => {
         // 선택된 버튼 강조(span visible)
