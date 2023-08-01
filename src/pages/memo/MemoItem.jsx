@@ -46,6 +46,7 @@ const MemoItem = ({ item }) => {
     }
     const deleteMemo = (e) => {
         deleteData(item.id);
+        window.location.reload();
     }
 
   return (
