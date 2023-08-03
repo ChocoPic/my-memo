@@ -35,7 +35,7 @@ const Overlay = styled.div`
 
 const Popup = ({isOpen, closePopup, prevData}) => {
   const preventOutsideClick = (e) => {
-    console.log('외부')
+    // console.log('외부')
     e.stopPropagation();
   }
 

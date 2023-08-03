@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { styled } from 'styled-components'
 import { COLORS } from '../style.js'
 
@@ -39,7 +39,8 @@ const Circle = styled.span`
     visibility: ${(props) => props.visible};
 `
 
-
+const ColorPicker = ({ onChange, curColor })=>{
+    const [colors, setColors] = useState(COLORS);   //색상 목록 배열
 
 
 const ColorPicker = ({ onSetPickedColor, value})=>{
@@ -55,6 +56,7 @@ const ColorPicker = ({ onSetPickedColor, value})=>{
         }
         return copy;
     }
+
 
     const [colors, setColors] = useState(setVisiblity(value));   //색상 목록 배열
    

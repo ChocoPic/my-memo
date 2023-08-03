@@ -76,13 +76,14 @@ const MainPage = () => {
     },[storedData]);
 
     // 외부 클릭시 새 메모 닫기
-    const closeForm = (e) => {
+    const closeForm = () => {
        setShowForm(false);
-    }
+    };
+
     // 새 메모 토글 버튼
     const toggleForm = () =>{
         setShowForm(!showForm);
-    }
+    };
     
     // 데이터가 준비될때까지 로딩중
     if (!loaded){

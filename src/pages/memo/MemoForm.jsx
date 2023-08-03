@@ -27,6 +27,7 @@ const LabelText = styled.span`
   font-weight: bold;
 
 `
+
 const MemoForm = ({ initialData, setIsFilled }) => {
   const initialState = { color: "", content: "" };
   const { addData, editData } = useLocalStorage("memo");
@@ -44,8 +45,9 @@ const MemoForm = ({ initialData, setIsFilled }) => {
       setFormData(initialData);
       setError1("");
       setError2("");
+
     }else{
-      setMode("ADD");
+      setMode("ADD");;
     }
   }, []);
  
@@ -58,17 +60,14 @@ const MemoForm = ({ initialData, setIsFilled }) => {
     });
   };
 
-  /* 내용 세팅 */
-  const inputChangeHandler = (e) => {
-    const value = e.target.value;
-    setFormData({
-      ...formData,
-      content: value,
-    });
-    if(value.replace(" ","") == ""){
-      setError2("내용을 입력하세요");
+  // 내용 세팅
+  const onSetContent = (e) => {
+    const val = e.target.value;
+    setContent(val);
+    if(val.replace(" ","").length == 0){
+      setValidContent(false)
     }else{
-      setError2("");
+      setValidContent(true);
     }
   };
 
@@ -95,7 +94,7 @@ const MemoForm = ({ initialData, setIsFilled }) => {
 
   return (
     <Wrapper>
-      <form >
+      <form>
         <label>
           <LabelText>COLOR</LabelText>
           <ColorPicker
@@ -103,21 +102,23 @@ const MemoForm = ({ initialData, setIsFilled }) => {
             onChange={inputChangeHandler}
             value={formData.color}
             onSetPickedColor={colorPickerHandler}
+
           />
         </label>
-        <ErrorMessage>{error1}</ErrorMessage>
+        {!validColor && <ErrorMessage>색상을 선택하세요</ErrorMessage>}
 
         <label>
           <LabelText>MEMO</LabelText>
           <TextInput
             name="content"
-            value={formData.content}
-            onChange={inputChangeHandler}
+            value={content}
+            onChange={onSetContent}
           />
         </label>
-          <ErrorMessage>{error2}</ErrorMessage>
-
+        {!validContent && <ErrorMessage>내용을 입력하세요</ErrorMessage>}
+         
           <Button title='저장' onClick={sendData} disabled={!isFormValid()}></Button>
+
       </form>
     </Wrapper>
   )
