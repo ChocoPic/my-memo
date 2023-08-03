@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react";
-import test from '../../db.json';
+import { toast } from "react-toastify";
+// import test from '../../db.json';
 
 //로컬 스토리지 관련 커스텀 훅
 const useLocalStorage = (key) => {
-  const testData = test;
+  // const testData = test;
   const [storedData, setStoredData] = useState([]);
-
   // setStoredData(test);
   // localStorage.setItem(key, JSON.stringify(test));
-
 
   // 마운트된 직후에 한번만 실행된다. 렌더링 될 때 한번.
   useEffect(() => {
@@ -17,11 +16,11 @@ const useLocalStorage = (key) => {
       localStorage.setItem(key, (data));  //문자열로 바꿔서 저장
       setStoredData(JSON.parse(data));  //JSON으로 복원해서 출력
     }else{
-      setStoredData(test);
+      // setStoredData(test);
     }
     // console.log('localStorageHandler 마운트');
   }, []);
-
+ 
   // ADD_DATA
   const addData = (inputData) => {
     const id = Date.now().toString(36); //시간으로 id 생성
@@ -52,7 +51,8 @@ const useLocalStorage = (key) => {
     localStorage.setItem(key, JSON.stringify(updatedData));
     setStoredData(updatedData);
   };
-  
+   
+
   return {storedData, addData, editData, deleteData};
 }
 export default useLocalStorage;

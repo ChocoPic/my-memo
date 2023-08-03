@@ -41,30 +41,25 @@ const Circle = styled.span`
 
 
 
+
 const ColorPicker = ({ onSetPickedColor, value})=>{
-    let init = [...COLORS];
-    if(value){
-        for(let i=0; i<init.length; i++){
-            if(value == init[i].color){
-                init[i].state = 'visible';
-            }else{
-                init[i].state = 'hidden';
-            }
-        }
-    }
-    const [colors, setColors] = useState(init);   //색상 목록 배열
-   
-    const onRadioButton = (e) => {
-        // 선택된 버튼 강조(span visible)
-        let copy = [...colors]
+    // 선택된 버튼 동그라미 표시하는 함수
+    const setVisiblity = (picked) => {
+        let copy = [...COLORS];
         for (let i=0; i<copy.length; i++){
-            if(copy[i].color === e.target.value){
+            if(copy[i].color === picked){
                 copy[i].state = 'visible';
             }else{
                 copy[i].state = 'hidden';
             }
         }
-        setColors(copy) //선택된 값 저장
+        return copy;
+    }
+
+    const [colors, setColors] = useState(setVisiblity(value));   //색상 목록 배열
+   
+    const onRadioButton = (e) => {
+        setColors(setVisiblity(e.target.value)) //선택된 값 저장
         onSetPickedColor(e.target.value); //부모 컴포넌트로 전달
     };
 
