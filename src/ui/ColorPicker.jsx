@@ -42,11 +42,13 @@ const Circle = styled.span`
 const ColorPicker = ({ onChange, curColor })=>{
     const [colors, setColors] = useState(COLORS);   //색상 목록 배열
 
-    const checkingColor = (pickedColor) => {
-        // 선택된 버튼 강조(span visible)
-        let copy = [...colors];
-        for(let i=0; i<copy.length; i++){
-            if(pickedColor === copy[i].color){
+
+const ColorPicker = ({ onSetPickedColor, value})=>{
+    // 선택된 버튼 동그라미 표시하는 함수
+    const setVisiblity = (picked) => {
+        let copy = [...COLORS];
+        for (let i=0; i<copy.length; i++){
+            if(copy[i].color === picked){
                 copy[i].state = 'visible';
             }else{
                 copy[i].state = 'hidden';
@@ -55,16 +57,12 @@ const ColorPicker = ({ onChange, curColor })=>{
         return copy;
     }
 
-    useEffect(() => {
-        if(curColor){
-            setColors(checkingColor(curColor));    //선택된 색 있으면 표시
-            onChange(curColor); //부모 컴포넌트로 전달
-        }
-    },[])
+
+    const [colors, setColors] = useState(setVisiblity(value));   //색상 목록 배열
    
     const onRadioButton = (e) => {
-        setColors(checkingColor(e.target.value)) //선택된 값 저장
-        onChange(e.target.value); //부모 컴포넌트로 전달
+        setColors(setVisiblity(e.target.value)) //선택된 값 저장
+        onSetPickedColor(e.target.value); //부모 컴포넌트로 전달
     };
 
     return (

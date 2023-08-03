@@ -2,14 +2,18 @@
 import { Route, Routes } from 'react-router-dom';
 import MainPage from './pages/MainPage';
 import { GlobalStyle } from './style.js'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+
 function App() {
 
   return (
     <>
-    <GlobalStyle/>
-    <Routes>
-      <Route path='/' element={<MainPage/>}/>
-    </Routes>
+      <ToastContainer/>
+      <GlobalStyle/>
+      <Routes>
+        <Route path='/' element={<MainPage/>}/>
+      </Routes>
     </>
   )
 }
