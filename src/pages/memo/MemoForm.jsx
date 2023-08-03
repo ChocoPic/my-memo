@@ -27,7 +27,6 @@ const LabelText = styled.span`
   font-weight: bold;
 
 `
-
 const MemoForm = ({ initialData, setIsFilled }) => {
   const initialState = { color: "", content: "" };
   const { addData, editData } = useLocalStorage("memo");
@@ -45,9 +44,8 @@ const MemoForm = ({ initialData, setIsFilled }) => {
       setFormData(initialData);
       setError1("");
       setError2("");
-
     }else{
-      setMode("ADD");;
+      setMode("ADD");
     }
   }, []);
  
@@ -60,14 +58,17 @@ const MemoForm = ({ initialData, setIsFilled }) => {
     });
   };
 
-  // 내용 세팅
-  const onSetContent = (e) => {
-    const val = e.target.value;
-    setContent(val);
-    if(val.replace(" ","").length == 0){
-      setValidContent(false)
+  /* 내용 세팅 */
+  const inputChangeHandler = (e) => {
+    const value = e.target.value;
+    setFormData({
+      ...formData,
+      content: value,
+    });
+    if(value.replace(" ","") == ""){
+      setError2("내용을 입력하세요");
     }else{
-      setValidContent(true);
+      setError2("");
     }
   };
 
@@ -94,7 +95,7 @@ const MemoForm = ({ initialData, setIsFilled }) => {
 
   return (
     <Wrapper>
-      <form>
+      <form >
         <label>
           <LabelText>COLOR</LabelText>
           <ColorPicker
@@ -102,23 +103,21 @@ const MemoForm = ({ initialData, setIsFilled }) => {
             onChange={inputChangeHandler}
             value={formData.color}
             onSetPickedColor={colorPickerHandler}
-
           />
         </label>
-        {!validColor && <ErrorMessage>색상을 선택하세요</ErrorMessage>}
+        <ErrorMessage>{error1}</ErrorMessage>
 
         <label>
           <LabelText>MEMO</LabelText>
           <TextInput
             name="content"
-            value={content}
-            onChange={onSetContent}
+            value={formData.content}
+            onChange={inputChangeHandler}
           />
         </label>
-        {!validContent && <ErrorMessage>내용을 입력하세요</ErrorMessage>}
-         
-          <Button title='저장' onClick={sendData} disabled={!isFormValid()}></Button>
+          <ErrorMessage>{error2}</ErrorMessage>
 
+          <Button title='저장' onClick={sendData} disabled={!isFormValid()}></Button>
       </form>
     </Wrapper>
   )
