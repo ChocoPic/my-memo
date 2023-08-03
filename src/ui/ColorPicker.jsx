@@ -39,10 +39,6 @@ const Circle = styled.span`
     visibility: ${(props) => props.visible};
 `
 
-const ColorPicker = ({ onChange, curColor })=>{
-    const [colors, setColors] = useState(COLORS);   //색상 목록 배열
-
-
 const ColorPicker = ({ onSetPickedColor, value})=>{
     // 선택된 버튼 동그라미 표시하는 함수
     const setVisiblity = (picked) => {
