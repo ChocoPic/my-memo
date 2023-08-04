@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { radius } from "../style";
 
 const StyledTextarea = styled.textarea`
-    width: calc(100% - 4rem);
+    width: calc(100% - 3rem);
     ${(props) => 
         props.height && `height: ${props.height}px;`
     }
@@ -11,11 +11,12 @@ const StyledTextarea = styled.textarea`
     font-size: 1rem;
     line-height: 1rem;
     border-radius: 0.5rem;
+    resize: none;
 `;
 
 function TextInput(props){
-    const {height, value, onChange} = props;
-    return <StyledTextarea height={height} value={value} onChange={onChange}/>;
+    const {value, onChange} = props;
+    return <StyledTextarea height={120} value={value} onChange={onChange}/>;
 }
 
 export default TextInput;

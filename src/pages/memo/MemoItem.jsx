@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import ColorTag from '../../ui/ColorTag';
 import IconButton from '../../ui/IconButton';
-import {margin, radius, padding} from '../../style';
+import {margin, radius, padding, theme} from '../../style';
 import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
 import Popup from "./Popup";
 import { useState } from "react";
@@ -12,14 +12,17 @@ import { toast } from 'react-toastify';
 const Card = styled.div`
     margin: ${margin.M};  
     border-radius: ${radius};
-    padding: ${padding.M};
-    background: #ffffff;
+    background: white;
+    box-shadow: 0px 0px 0.25rem 0.25rem #dddddd;
 `;
 
 // Card 메모내용
 const CardText = styled.span`
-    margin-left: ${margin.S};
-    margin-right: ${margin.S};
+    max-width: 20rem;
+    margin-left: ${margin.M};
+    margin-right: ${margin.M};
+    margin-top: ${margin.S};
+    padding: ${padding.M};
     color: black;
     font-size: 1rem;
     display: block;

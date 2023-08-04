@@ -2,10 +2,15 @@ import { createGlobalStyle } from 'styled-components';
 
 /* 테마 색상 */
 export const theme = {
-    primaryColor: '#A1C8E8',
-    secondaryColor: '',
+    primaryDefault: '#222222',
+    primaryLight: '#767586',
+    secondaryDefault: '#22A39F',
+    secondaryLight: '#F3EFE0',
+    white: '#ffffff',
+    black: '#000000', 
 }
 
+/* 글로벌 스타일 */
 export const GlobalStyle = createGlobalStyle`
   html{
     display: flex;
@@ -19,12 +24,12 @@ export const GlobalStyle = createGlobalStyle`
     display: flex;
     justify-content: center; /* 가로 중앙 정렬 */
     align-items: start;    /*세로 중앙 정렬*/
-    background: ${theme.primaryColor}
+    background: ${theme.primaryDefault};
   }
 
   #root{
     width: 70%;
-    height: 100;
+    height: 100%;
     min-width: 20rem;
     max-width: 50rem;
   }
