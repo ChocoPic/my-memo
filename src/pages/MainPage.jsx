@@ -7,52 +7,46 @@ import useLocalStorage from '../store/LocalStorageHandler';
 import IconButton from '../ui/IconButton';
 import {AiOutlineClose, AiOutlinePlus} from 'react-icons/ai';
 import { toast } from 'react-toastify';
-import { COLORS } from '../style';
+import { COLORS, theme } from '../style';
 import ColorFilter from '../ui/ColorFilter';
+import TitledIconButton from '../ui/TitledIconButton';
+import SpeechBubble from '../ui/SpeechBubble';
 
 /* styled-components */
-const CardListWrapper = styled.section`
+const Header = styled.section`
+    display: flex;
     width: 100%;
-    padding: ${padding.S};   
+    height: 8rem;
+    position: relative;
+`
+const LogoText = styled.h3`
+    color: ${theme.primaryLight};
+    position: absolute;
+    top:0;
+    right: 0;
+`
+const NewButton = styled.span`
+    position: absolute;
+    bottom: 0;
+    left: 0;
+`
+
+const CardListContainer = styled.section`
+    width: 100%;   
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     align-items: flex-start;
+    border-radius: ${radius} 0 ${radius} ${radius};
+    background: ${theme.white};
 `;
-const Container = styled.div`
-    display: flex;
-    justify-content: space-between;
-    align-items: start-end;
-    flex-direction: column;
-    background: white;
-    border-radius: ${radius};
-    padding-left: ${padding.M};
-    padding-right: ${padding.M};
-`;
-const ContainerHeader = styled.div`
-    display: flex;
-    justify-content: space-between;  
-    align-items: center;
-    flex-direction: row;
-    background: white;
-    margin-left: ${margin.S};
-    margin-right: ${margin.S};
-`;
-const Line = styled.span`
-    display: block;
-    width: 100%;
-    height: 0.05rem;
-    background: black;
-    margin-top: ${margin.M};
-    margin-bottom: ${margin.M};
-`;
+
 const FilterContainer = styled.div`
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    width: 16rem;
-    margin: ${margin.S};
-    padding: ${padding.S};
+    width: 100%;
+    justify-content: end;
+    border-radius: ${radius} ${radius} 0 0;
 `;
 
 /* 메모 목록 컴포넌트*/
@@ -77,7 +71,10 @@ const MainPage = () => {
     const { storedData } = useLocalStorage("memo");
     const [memos, setMemos] = useState([]); //메모 아이템 내용들
     const [loaded, setLoaded] = useState(false);    //로딩 여부
-    const [isFilled, setIsFilled] = useState(false);
+        JSON.parse(sessionStorage.getItem("form"||false))
+    const [isFilled, setIsFilled] = useState(        
+        JSON.parse(sessionStorage.getItem("saved"||false))
+    );
     const [showForm, setShowForm] = useState( //새 메모 창
         JSON.parse(sessionStorage.getItem("form"||false))
     );       
@@ -85,6 +82,7 @@ const MainPage = () => {
 
     useEffect(()=>{ //세션 스토리지에 form이 닫히지 않게 저장
        sessionStorage.setItem("form", JSON.stringify(showForm));
+       sessionStorage.setItem("saved", JSON.stringify(isFilled));
     },[showForm]);
 
     // 로딩되었는지 체크한다.
@@ -101,7 +99,7 @@ const MainPage = () => {
     useEffect(()=>{
         if(loaded){ //로딩 됐으면 세팅
             setMemos(storedData);   //필터링된 결과를 세팅해준다
-            // console.log("storedData 업데이트됨")
+            console.log("storedData 업데이트됨")
             if(isFilled){
                 toast.success('업데이트 완료!',{
                     position: "top-right",
@@ -137,48 +135,42 @@ const MainPage = () => {
     // 데이터가 있으면 렌더링
     return (
         <>
+        {/* 헤더 */}
+        <Header>
             {/* 로고 */}
-            <h2>Memo</h2>
+            <LogoText>mymemo</LogoText>
+             {/* 새 메모 버튼 */}
+            <NewButton>
+                <TitledIconButton 
+                    onClick={toggleForm} 
+                    icon={showForm? <AiOutlineClose size={24}/> : <AiOutlinePlus size={24}/>}
+                    title={showForm? "닫기": "새 메모"}
+                />
+            </NewButton>
+        </Header>
             {/* 새 메모 폼*/}
-            <Container>
-                <ContainerHeader>
-                    <h3>새 메모</h3>
-                    <IconButton 
-                        onClick={toggleForm} 
-                        icon={showForm? <AiOutlineClose/> : <AiOutlinePlus/>}
-                    />
-                </ContainerHeader>
                 {showForm && (
-                    <MemoForm setIsFilled={setIsFilled}/>
+                    <SpeechBubble>
+                        <MemoForm setIsFilled={setIsFilled}/>
+                    </SpeechBubble>
                 )}
-            </Container>
-
-            <Line/>
 
             {/* 필터 */}
-            <h3>필터</h3>
             <FilterContainer>
-                <ColorFilter 
-                    color="#000000" 
-                    bgcolor="#ffffff"
-                    value="all" 
-                    onClick={() => changeFilter('all')}/>
+                <ColorFilter color="#000000" value="all" onClick={() => changeFilter('all')}/>
                 {COLORS.map(item => (
-                    <ColorFilter 
-                        key={item.id}
-                        color={item.color} 
-                        bgcolor="#ffffff"
-                        value={item.color}
-                        onClick={() => changeFilter(item.color)}/>
+                    <ColorFilter key={item.id} color={item.color} 
+                        value={item.color} onClick={() => changeFilter(item.color)}/>
                 ))}    
             </FilterContainer>
+        
             
             {/* 메모 목록 */}
-            <CardListWrapper onClick={closeForm}>
+            <CardListContainer onClick={closeForm}>
             {loaded && 
                 <ItemList items={memos} filtercolor={filter}/>
             }
-            </CardListWrapper>
+            </CardListContainer>
         </>
     )
 }

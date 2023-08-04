@@ -35,7 +35,6 @@ const MemoForm = ({ initialData, setIsFilled }) => {
   const [formData, setFormData] = useState(initialState);
   const [error1, setError1] = useState("태그 색상을 선택하세요");
   const [error2, setError2] = useState("내용을 입력하세요");
-  const [button, setButton] = useState(false);
 
   //최초 한번만 초기화한다. 데이터 미리 세팅
   useEffect(() => {

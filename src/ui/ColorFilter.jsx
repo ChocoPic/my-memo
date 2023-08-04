@@ -1,30 +1,28 @@
 import React from "react";
 import styled from "styled-components";
-import { margin, padding } from "../style";
 
-const Background = styled.button`
-    display: flex;
-    align-items: start;
-    justify-content: center;
-    width: rem;
-    height: 2.5rem;
-    background: ${(props) => props.bgcolor};
-    padding: ${padding.S};
-    border-radius: 0;
-`
 
-const StyledColorTag = styled.div`
+const StyledColorTag = styled.button`
     width: 2rem;
-    height: 1.5rem;
+    height: 2rem;
     background: ${(props) => props.color};
+    border-top: 0.1rem solid white;
+    border-left: 0.1rem solid white;
+    &:last-child{
+        border-right: 0.1rem solid white;
+    }
+    border-radius: 0;
+    cursor: pointer;
+    transition: transform 0.3s;
+    &:hover{
+        transform: scale(1.1);
+    }
 `;  
 
 function ColorFilter(props){
-    const {bgcolor, color, onClick} = props;
+    const {color, onClick} = props;
     return (
-        <Background bgcolor={bgcolor} onClick={onClick}>
-            <StyledColorTag color={color}/>
-        </Background>
+        <StyledColorTag  onClick={onClick} color={color}/>
     );
 }
 
