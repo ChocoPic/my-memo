@@ -27,7 +27,7 @@ const LabelText = styled.span`
   font-weight: bold;
 
 `
-const MemoForm = ({ initialData, setIsFilled }) => {
+const MemoForm = ({ initialData }) => {
   const initialState = { color: "", content: "" };
   const { addData, editData } = useLocalStorage("memo");
 
@@ -88,7 +88,6 @@ const MemoForm = ({ initialData, setIsFilled }) => {
         editData(formData);
         break;
     }
-    setIsFilled(true);
     setFormData(initialState);  //폼 초기화
   }
 

@@ -10,6 +10,15 @@ import { toast } from 'react-toastify';
 
 // Card Item
 const Card = styled.div`
+    // 화면 좁을 때
+    @media (min-width: 10rem){
+        width: 90%;
+    }
+    // 화면 넓을 때
+    @media (min-width: 40rem){
+        width: 40%;
+    }
+
     margin: ${margin.M};  
     border-radius: ${radius};
     background: white;
@@ -18,7 +27,6 @@ const Card = styled.div`
 
 // Card 메모내용
 const CardText = styled.span`
-    max-width: 20rem;
     margin-left: ${margin.M};
     margin-right: ${margin.M};
     margin-top: ${margin.S};
@@ -26,6 +34,7 @@ const CardText = styled.span`
     color: ${theme.black};
     font-size: 1rem;
     display: block;
+
 `;
 
 // 버튼 영역
