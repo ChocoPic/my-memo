@@ -23,7 +23,7 @@ const CardText = styled.span`
     margin-right: ${margin.M};
     margin-top: ${margin.S};
     padding: ${padding.M};
-    color: black;
+    color: ${theme.black};
     font-size: 1rem;
     display: block;
 `;

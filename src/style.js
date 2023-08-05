@@ -81,14 +81,12 @@ export const radius = '1rem';
 export const fontSize = '';
 export const fontDefault = '';
 
-
-
 /* 컬러피커 색상 */
 export const COLORS = [
-    {"id": 1, "color":"#FF0060", "state":"hidden"},
-    {"id": 2, "color":"#F6FA70", "state":"hidden"},
-    {"id": 3, "color":"#00DFA2", "state":"hidden"},
-    {"id": 4, "color":"#0079FF", "state":"hidden"},
-    {"id": 5, "color":"#9376E0", "state":"hidden"},
-    {"id": 6, "color":"#999999", "state":"hidden"}
+    {"color_name": "red", "color_code":"#FF6D60", "state":"hidden"},
+    {"color_name": "yellow", "color_code":"#F7D060", "state":"hidden"},
+    {"color_name": "green", "color_code":"#64E291", "state":"hidden"},
+    {"color_name": "blue", "color_code":"#1CC5DC", "state":"hidden"},
+    {"color_name": "purple", "color_code":"#A275E3", "state":"hidden"},
+    {"color_name": "grey", "color_code":"#888888", "state":"hidden"}
 ];

@@ -1,52 +1,45 @@
 import React, { useEffect, useState } from 'react'
 import styled from "styled-components";
+import { toast } from 'react-toastify';
+import useLocalStorage from '../store/LocalStorageHandler';
+
 import MemoForm from './memo/MemoForm';
 import MemoItem from './memo/MemoItem';
-import { margin, padding, radius } from '../style';
-import useLocalStorage from '../store/LocalStorageHandler';
 import IconButton from '../ui/IconButton';
-import {AiOutlineClose, AiOutlinePlus} from 'react-icons/ai';
-import { toast } from 'react-toastify';
-import { COLORS, theme } from '../style';
 import ColorFilter from '../ui/ColorFilter';
-import TitledIconButton from '../ui/TitledIconButton';
 import SpeechBubble from '../ui/SpeechBubble';
+
+import {AiOutlineClose, AiOutlinePlus} from 'react-icons/ai';
+import { COLORS, theme, padding, radius } from '../style';
 
 /* styled-components */
 const Header = styled.section`
     display: flex;
+    flex-direction: column;
     width: 100%;
-    height: 8rem;
-    position: relative;
+    height: fit-content;
 `
 const LogoText = styled.h3`
     color: ${theme.primaryLight};
-    position: absolute;
-    top:0;
-    right: 0;
 `
-const NewButton = styled.span`
-    position: absolute;
-    bottom: 0;
-    left: 0;
+const ButtonContainer = styled.div`
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+    gap: 0.5rem;
+    width: 100%;
+    height: fit-content;
 `
-
 const CardListContainer = styled.section`
     width: 100%;   
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     align-items: flex-start;
-    border-radius: ${radius} 0 ${radius} ${radius};
+    border-radius: ${radius};
     background: ${theme.white};
-`;
-
-const FilterContainer = styled.div`
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    justify-content: end;
-    border-radius: ${radius} ${radius} 0 0;
+    padding: ${padding.L};
 `;
 
 /* 메모 목록 컴포넌트*/
@@ -139,38 +132,36 @@ const MainPage = () => {
         <Header>
             {/* 로고 */}
             <LogoText>mymemo</LogoText>
-             {/* 새 메모 버튼 */}
-            <NewButton>
-                <TitledIconButton 
+            <ButtonContainer>
+                {/* 새 메모 버튼 */}
+                <IconButton
                     onClick={toggleForm} 
                     icon={showForm? <AiOutlineClose size={24}/> : <AiOutlinePlus size={24}/>}
-                    title={showForm? "닫기": "새 메모"}
+                    bgcolor={theme.white}
+                    size={3}
                 />
-            </NewButton>
-        </Header>
-            {/* 새 메모 폼*/}
-                {showForm && (
-                    <SpeechBubble>
-                        <MemoForm setIsFilled={setIsFilled}/>
-                    </SpeechBubble>
-                )}
-
-            {/* 필터 */}
-            <FilterContainer>
-                <ColorFilter color="#000000" value="all" onClick={() => changeFilter('all')}/>
+                {/* 필터 */}
+                <ColorFilter color="전체" value="all" onClick={() => changeFilter('all')}/>
                 {COLORS.map(item => (
-                    <ColorFilter key={item.id} color={item.color} 
-                        value={item.color} onClick={() => changeFilter(item.color)}/>
+                    <ColorFilter key={item.color_name} color={item.color_name} 
+                        value={item.color_name} onClick={() => changeFilter(item.color_name)}/>
                 ))}    
-            </FilterContainer>
+            </ButtonContainer>
+        </Header>
+
+        {/* 새 메모 폼*/}
+        {showForm && (
+            <SpeechBubble>
+                <MemoForm setIsFilled={setIsFilled}/>
+            </SpeechBubble>
+        )}
         
-            
-            {/* 메모 목록 */}
-            <CardListContainer onClick={closeForm}>
-            {loaded && 
-                <ItemList items={memos} filtercolor={filter}/>
-            }
-            </CardListContainer>
+        {/* 메모 목록 */}
+        <CardListContainer onClick={closeForm}>
+        {loaded && 
+            <ItemList items={memos} filtercolor={filter}/>
+        }
+        </CardListContainer>
         </>
     )
 }
