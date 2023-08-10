@@ -34,11 +34,11 @@ const ButtonContainer = styled.div`
 const CardListContainer = styled.section`
     width: 100%;
     min-width: 15rem;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: flex-start;
-    justify-content: center;
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: repeat(2, minmax(13rem, 1fr));
+    grid-template-rows: auto;
+    
     border-radius: ${radius};
     background: ${theme.white};
     padding: ${padding.L};

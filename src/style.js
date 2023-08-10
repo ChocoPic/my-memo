@@ -30,7 +30,7 @@ export const GlobalStyle = createGlobalStyle`
   #root{
     width: 70%;
     height: 100%;
-    min-width: 20rem;
+    min-width: 22rem;
     max-width: 50rem;
   }
 

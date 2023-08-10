@@ -58,12 +58,12 @@ const MemoForm = ({ initialData }) => {
   };
 
   /* 내용 세팅 */
-  const inputChangeHandler = (e) => {
-    const value = e.target.value;
+  const inputChangeHandler = (value) => {
     setFormData({
       ...formData,
       content: value,
     });
+
     if(value.replace(" ","") == ""){
       setError2("내용을 입력하세요");
     }else{
@@ -111,6 +111,7 @@ const MemoForm = ({ initialData }) => {
             name="content"
             value={formData.content}
             onChange={inputChangeHandler}
+            max={500}
           />
         </label>
           <ErrorMessage>{error2}</ErrorMessage>

@@ -8,8 +8,8 @@ const StyledColorTag = styled.div`
     border-radius: 1.5rem;
     background: ${(props) => props.color};
     position: relative;
-    top: -0.5rem;
-    left: -0.5rem;
+    top: 0.5rem;
+    left: 0.5rem;
 `;  
 
 function ColorTag(props){
