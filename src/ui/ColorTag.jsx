@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { padding, radius } from "../style";
-import {AiFillTag} from "react-icons/ai";
+import {COLORS} from "../style";
 
 const StyledColorTag = styled.div`
     width: 1.5rem;
@@ -9,14 +8,16 @@ const StyledColorTag = styled.div`
     border-radius: 1.5rem;
     background: ${(props) => props.color};
     position: relative;
-    top: -0.5rem;
-    left: -0.5rem;
+    top: 0.5rem;
+    left: 0.5rem;
 `;  
 
 function ColorTag(props){
     const {color} = props;
+    const tagColor =  color ? COLORS.find(c => c.color_name==color).color_code : "";
+    
     return (
-        <StyledColorTag color={color}/>
+        <StyledColorTag color={tagColor}/>
     )
 }
 

@@ -5,7 +5,7 @@ import { margin, theme } from '../style'
 const Container = styled.div`
     display: block;
     position: relative;
-    width: fit-content;
+    width: 100%;
     height: fit-content;
     background:${theme.white};
     border-radius: 0.5rem;

@@ -10,20 +10,23 @@ import { toast } from 'react-toastify';
 
 // Card Item
 const Card = styled.div`
-    margin: ${margin.M};  
     border-radius: ${radius};
     background: white;
     box-shadow: 0px 0px 0.25rem 0.25rem #dddddd;
 `;
 
 // Card 메모내용
-const CardText = styled.span`
-    max-width: 20rem;
+const CardText = styled.p`
+    white-space: break-word;
+    word-break: break-all;
+    height: 10rem;
+    overflow: auto;
+
     margin-left: ${margin.M};
     margin-right: ${margin.M};
     margin-top: ${margin.S};
     padding: ${padding.M};
-    color: black;
+    color: ${theme.black};
     font-size: 1rem;
     display: block;
 `;
@@ -51,12 +54,6 @@ const MemoItem = ({ item }) => {
         const doDelete = window.confirm('정말로 삭제하시겠습니까?'); // 삭제 확인 메시지 띄우기
         if(doDelete){
             deleteData(item.id);
-            toast.success('삭제 성공!', {
-                position: "top-right",
-                autoClose: 2000,
-                hideProgressBar: true,
-                theme: "light",
-            });
         }
     };
 
