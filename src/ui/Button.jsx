@@ -9,7 +9,7 @@ const StyledButton = styled.button`
 
 function Button(props){
     const {title, onClick, disabled} = props;
-    return <StyledButton disabled={disabled} onClick={onClick}>{title || "button"}</StyledButton>
+    return <StyledButton disabled={disabled||false} onClick={onClick}>{title||"button"}</StyledButton>
 }
 
 export default Button;

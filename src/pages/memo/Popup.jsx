@@ -23,6 +23,7 @@ const StyledPopup = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
 `
+
 const Overlay = styled.div`
   position: fixed;
   top: 0;

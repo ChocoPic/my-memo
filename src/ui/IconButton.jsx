@@ -11,12 +11,20 @@ const StyledIconButton = styled.nav`
     border-radius: ${props => props.size/3 || 0.75}rem;
     margin: ${margin.S};
     background-color: ${props => props.bgcolor || '#ffffff00'};  
+
+    cursor: pointer;
+    transition: transform 0.3s;
+    &:hover{
+        transform: scale(1.1);
+    }
 `;
+
 
 function IconButton(props){
     const {icon, onClick, bgcolor, size} = props;
+    
     return(
-        <StyledIconButton 
+        <StyledIconButton
             onClick={onClick} 
             bgcolor={bgcolor}
             size={size}

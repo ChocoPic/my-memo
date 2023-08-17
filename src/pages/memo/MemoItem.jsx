@@ -6,6 +6,7 @@ import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
 import Popup from "./Popup";
 import { useState } from "react";
 import useLocalStorage from "../../store/LocalStorageHandler";
+import SimpleModal from "./SimpleModal";
 
 // Card Item
 const Card = styled.div`
@@ -16,7 +17,7 @@ const Card = styled.div`
 
 // Card 메모내용
 const CardText = styled.p`
-    white-space: pre;   //줄바꿈, 공백 그대로 출력
+    white-space: pre-wrap;   //줄바꿈, 공백 그대로 출력 + 넘치면 줄바꿈
     word-break: break-all;
     height: 10rem;
     overflow: auto;
@@ -50,39 +51,53 @@ const ButtonContainer = styled.div`
 
 const MemoItem = ({ item }) => {
     const {deleteData} = useLocalStorage("memo");
-    const [isOpen, setIsOpen] = useState(false);
+    const [isOpenEdit, setIsOpenEdit] = useState(false);
+    const [isOpenDel, setIsOpenDel] = useState(false);
+    
+    //// 수정 모달창
+    // 수정창 닫기
+    const closeEdit = () => {
+        setIsOpenEdit(false);
+    };
+    // 수정창 열기
+    const openEdit = (e) => {
+        setIsOpenEdit(true);// 수정창 열기
+    };
 
-    const openPopup = () => {
-        setIsOpen(true);
-    };
-    const closePopup = () => {
-        setIsOpen(false);
-    };
-    const editMemo = (e) => {
-        openPopup(); // 수정 팝업창 띄우기
-    };
-    const deleteMemo = (e) => {
-        const doDelete = window.confirm('정말로 삭제하시겠습니까?'); // 삭제 확인 메시지 띄우기
-        if(doDelete){
-            deleteData(item.id);
-            window.location.reload();
-        }
+    //// 삭제 모달창
+    // 삭제창 열기
+    const openDelete = () => {
+        setIsOpenDel(true);
+    }
+    const closeDelete = () => {
+        setIsOpenDel(false);
+    }
+    // 삭제하기('예' 클릭시)
+    const deleteMemo = () => {
+        deleteData(item.id);
+        closeDelete();
+        window.location.reload();
     };
 
   return (
     <Card >
-        {/* edit버튼 클릭시 보여줄 팝업창 */}
+        {/* edit 버튼 클릭시 보여줄 모달창 */}
         <Popup 
-            isOpen={isOpen} 
-            closePopup={closePopup} prevData={item} 
+            isOpen={isOpenEdit} 
+            closePopup={closeEdit} prevData={item} 
+        />
+        {/* delete 버튼 클릭시 보여줄 모달창 */}
+        <SimpleModal
+            isOpen={isOpenDel} text="삭제하시겠습니까?"
+            onClose={closeDelete} onConfirm={deleteMemo}
         />
 
         {/* 기본 구성요소들 */}
         <ColorTag color={item.color}/>
         <CardText>{item.content}</CardText>
         <ButtonContainer>
-            <IconButton onClick={editMemo} icon={<AiOutlineEdit size={24}/>}/>
-            <IconButton onClick={deleteMemo} icon={<AiOutlineDelete size={24}/>}/>
+            <IconButton onClick={openEdit} icon={<AiOutlineEdit size={24}/>}/>
+            <IconButton onClick={openDelete} icon={<AiOutlineDelete size={24}/>}/>
         </ButtonContainer>
     </Card>
   )
