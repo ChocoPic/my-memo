@@ -232,7 +232,7 @@ Error generating stack: `+l.message+`
 `,sg=B.div`
     display: flex;
     justify-content: flex-end;
-`,ug=({item:e})=>{const{deleteData:t}=$u("memo"),[n,r]=C.useState(!1),o=()=>{r(!0)},l=()=>{r(!1)},i=u=>{o()},s=u=>{window.confirm("정말로 삭제하시겠습니까?")&&(t(e.id),window.reload())};return N.jsxs(lg,{children:[N.jsx(og,{isOpen:n,closePopup:l,prevData:e}),N.jsx(X1,{color:e.color}),N.jsx(ig,{children:e.content}),N.jsxs(sg,{children:[N.jsx(pl,{onClick:i,icon:N.jsx(eg,{size:24})}),N.jsx(pl,{onClick:s,icon:N.jsx(b1,{size:24})})]})]})},ag=B.button`
+`,ug=({item:e})=>{const{deleteData:t}=$u("memo"),[n,r]=C.useState(!1),o=()=>{r(!0)},l=()=>{r(!1)},i=u=>{o()},s=u=>{window.confirm("정말로 삭제하시겠습니까?")&&(t(e.id),window.location.reload())};return N.jsxs(lg,{children:[N.jsx(og,{isOpen:n,closePopup:l,prevData:e}),N.jsx(X1,{color:e.color}),N.jsx(ig,{children:e.content}),N.jsxs(sg,{children:[N.jsx(pl,{onClick:i,icon:N.jsx(eg,{size:24})}),N.jsx(pl,{onClick:s,icon:N.jsx(b1,{size:24})})]})]})},ag=B.button`
     display: block;
     width: 2.5rem;
     height: 2.5rem;
