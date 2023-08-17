@@ -27,7 +27,7 @@ const LabelText = styled.span`
   font-weight: bold;
 
 `
-const MemoForm = ({ initialData, setIsFilled }) => {
+const MemoForm = ({ initialData }) => {
   const initialState = { color: "", content: "" };
   const { addData, editData } = useLocalStorage("memo");
 
@@ -58,12 +58,12 @@ const MemoForm = ({ initialData, setIsFilled }) => {
   };
 
   /* 내용 세팅 */
-  const inputChangeHandler = (e) => {
-    const value = e.target.value;
+  const inputChangeHandler = (value) => {
     setFormData({
       ...formData,
       content: value,
     });
+
     if(value.replace(" ","") == ""){
       setError2("내용을 입력하세요");
     }else{
@@ -88,7 +88,6 @@ const MemoForm = ({ initialData, setIsFilled }) => {
         editData(formData);
         break;
     }
-    setIsFilled(true);
     setFormData(initialState);  //폼 초기화
   }
 
@@ -112,6 +111,7 @@ const MemoForm = ({ initialData, setIsFilled }) => {
             name="content"
             value={formData.content}
             onChange={inputChangeHandler}
+            max={500}
           />
         </label>
           <ErrorMessage>{error2}</ErrorMessage>

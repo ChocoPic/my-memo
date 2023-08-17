@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { styled } from 'styled-components'
 import { COLORS } from '../style.js'
 
@@ -40,11 +40,12 @@ const Circle = styled.span`
 `
 
 const ColorPicker = ({ onSetPickedColor, value})=>{
-    // 선택된 버튼 동그라미 표시하는 함수
+
+    // 선택된 버튼에만 표시하는 함수
     const setVisiblity = (picked) => {
         let copy = [...COLORS];
         for (let i=0; i<copy.length; i++){
-            if(copy[i].color === picked){
+            if(copy[i].color_name === picked){
                 copy[i].state = 'visible';
             }else{
                 copy[i].state = 'hidden';
@@ -64,13 +65,13 @@ const ColorPicker = ({ onSetPickedColor, value})=>{
     return (
         <ColorContainer>
             {colors.map(color => (
-                <StyledLabel key={color.id} bgcolor={color.color}>
+                <StyledLabel key={color.color_name} bgcolor={color.color_code}>
                     <StyledInput
                         type='radio'
                         className='radio-input'
-                        id={color.id}
+                        id={color.color_name}
                         name="radio-button"
-                        value={color.color}
+                        value={color.color_name}
                         onChange={onRadioButton}
                         checked={false}
                     />
