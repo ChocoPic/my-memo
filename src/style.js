@@ -8,6 +8,7 @@ export const theme = {
     secondaryLight: '#F3EFE0',
     white: '#ffffff',
     black: '#000000', 
+    gray: '#aaaaaa'
 }
 
 /* 글로벌 스타일 */

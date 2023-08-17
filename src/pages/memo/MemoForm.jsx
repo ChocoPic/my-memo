@@ -80,6 +80,12 @@ const MemoForm = ({ initialData }) => {
 
   /* 저장 버튼 눌렀을 때 실행할 함수*/
   const sendData = (e) => {
+    // 줄바꿈이 저장될 수 있도록 한다
+    setFormData({
+      ...formData,
+      content: formData.content.replace(/(?:\r\n|\r|\n)/g, '\\n')
+    });
+
     switch(mode){
       case "ADD":
         addData(formData);

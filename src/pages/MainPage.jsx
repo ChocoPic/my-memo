@@ -67,14 +67,17 @@ const MainPage = () => {
     const { storedData } = useLocalStorage("memo");
     const [memos, setMemos] = useState([]); //메모 아이템 내용들
     const [loaded, setLoaded] = useState(false);    //로딩 여부
-    const [filter, setFilter] = useState('all'); //필터
-
+    const [filter, setFilter] = useState(
+        JSON.parse(sessionStorage.getItem("filter")) ||"all"); //필터
     const [showForm, setShowForm] = useState( //새 메모 창
-        JSON.parse(sessionStorage.getItem("form"||false)));   
+        JSON.parse(sessionStorage.getItem("form")) ||false);   
 
     useEffect(()=>{ //세션 스토리지에 form이 닫히지 않게 저장
        sessionStorage.setItem("form", JSON.stringify(showForm));
     },[showForm]);
+    useEffect(()=>{
+       sessionStorage.setItem("filter", JSON.stringify(filter));
+    },[filter]);
 
     // 로딩되었는지 체크한다.
     useEffect(() => {
@@ -83,22 +86,22 @@ const MainPage = () => {
         }else{
             setLoaded(false);
         }
-        console.log('마운트시 한번만 실행')
+        // console.log('마운트시 한번만 실행')
     },[])
     
     // storedData가 업데이트될 때마다 memos도 업데이트 해주자
     useEffect(()=>{
         if(loaded){ //로딩 됐으면 세팅
             setMemos(storedData);   //필터링된 결과를 세팅해준다
-            console.log("storedData 업데이트됨");
-            //저장되었을때
-                toast.success('업데이트 완료!',{
-                    position: "top-right",
-                    autoClose: 2000,
-                    hideProgressBar: true,
-                    theme: "light",
-                })
-           
+            // console.log("storedData 업데이트됨");
+            // 저장되었을때
+            toast.success('업데이트 완료!',{
+                position: "top-right",
+                autoClose: 2000,
+                hideProgressBar: true,
+                theme: "light",
+            })
+           closeForm();
         }
     },[storedData]);
 
@@ -137,10 +140,16 @@ const MainPage = () => {
                     size={3}
                 />
                 {/* 필터 */}
-                <ColorFilter color="전체" value="all" onClick={() => changeFilter('all')}/>
-                {COLORS.map(item => (
-                    <ColorFilter key={item.color_name} color={item.color_name} 
-                        value={item.color_name} onClick={() => changeFilter(item.color_name)}/>
+                <ColorFilter color="전체" 
+                    value="all" 
+                    onClick={() => changeFilter('all')}
+                    isChecked={filter=="all"? true : false}/>
+                {COLORS.map((item) => (
+                    <ColorFilter key={item.color_name} 
+                        color={item.color_name} 
+                        value={item.color_name} 
+                        onClick={() => changeFilter(item.color_name)}
+                        isChecked={filter==item.color_name? true : false}/>
                 ))}    
             </ButtonContainer>
         </Header>

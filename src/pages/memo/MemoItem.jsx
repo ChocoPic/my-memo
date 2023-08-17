@@ -6,7 +6,6 @@ import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
 import Popup from "./Popup";
 import { useState } from "react";
 import useLocalStorage from "../../store/LocalStorageHandler";
-import { toast } from 'react-toastify';
 
 // Card Item
 const Card = styled.div`
@@ -17,7 +16,7 @@ const Card = styled.div`
 
 // Card 메모내용
 const CardText = styled.p`
-    white-space: break-word;
+    white-space: pre;   //줄바꿈, 공백 그대로 출력
     word-break: break-all;
     height: 10rem;
     overflow: auto;
@@ -29,6 +28,18 @@ const CardText = styled.p`
     color: ${theme.black};
     font-size: 1rem;
     display: block;
+
+    &::-webkit-scrollbar{   //스크롤 전체
+        width: 0.5rem;
+        height: 0.5rem;
+    }
+    &::-webkit-scrollbar-track{ //스크롤 외부
+       background-color: ${theme.white};
+    }
+    &::-webkit-scrollbar-thumb{ //스크롤 막대
+        background-color: ${theme.gray};
+        border-radius: 0.5rem;
+    }
 `;
 
 // 버튼 영역
@@ -54,6 +65,7 @@ const MemoItem = ({ item }) => {
         const doDelete = window.confirm('정말로 삭제하시겠습니까?'); // 삭제 확인 메시지 띄우기
         if(doDelete){
             deleteData(item.id);
+            window.location.reload();
         }
     };
 
