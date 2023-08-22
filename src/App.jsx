@@ -12,7 +12,7 @@ function App() {
       <ToastContainer/>
       <GlobalStyle/>
       <Routes>
-        <Route path='/my-memo' element={<MainPage/>}/>
+        <Route path='/my-memo/' element={<MainPage/>}/>
       </Routes>
     </>
   )
